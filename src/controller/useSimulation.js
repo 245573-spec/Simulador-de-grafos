@@ -1,0 +1,1 @@
+//Opciones del simulador
