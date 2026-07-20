@@ -1,70 +1,53 @@
-# 📊 Graph Simulator - Desktop App
+# 📊 Graph Simulator - Web Application (MVC Architecture)
 
-¡Bienvenido al simulador interactivo de algoritmos de grafos! Esta es una aplicación de escritorio diseñada para visualizar, simular y analizar el comportamiento de algoritmos clásicos de grafos (BFS, DFS, Dijkstra, Kruskal/Prim) en tiempo real. 
+¡Bienvenido al simulador interactivo de algoritmos de grafos! Esta es una aplicación web interactiva diseñada para visualizar, simular y analizar el comportamiento de algoritmos clásicos de grafos (BFS, DFS, Dijkstra, Kruskal/Prim) en tiempo real, directamente desde el navegador.
 
-La aplicación permite ver de forma dinámica el cambio de estados de los nodos (sin recorrer, próximo, recorrido) y las aristas, además de contar con un depurador visual que resalta la línea de código que se está ejecutando en cada paso del algoritmo.
-
----
-
-## 🛠️ Arquitectura y Stack Tecnológico
-
-El proyecto sigue una **arquitectura monolítica modular** dividida en dos capas principales que residen en el mismo repositorio físico:
-1. **Frontend (Capa de Presentación):** Controlada por React para la interfaz de usuario, reactividad de estados y renderizado visual dinámico mediante SVG/Canvas.
-2. **Backend (Capa de Lógica de Negocio):** Controlada por Node.js (corriendo en el proceso de procesamiento de Electron), encargada de calcular las matrices, listas de adyacencia y la ejecución paso a paso de los algoritmos.
-
-### ¿Qué hace cada herramienta en el proyecto?
-
-*   **Electron.js:** Actúa como el contenedor de escritorio. Transforma nuestro código web en una aplicación nativa instalable (para Windows, macOS o Linux), dándonos acceso a la API del sistema operativo y permitiendo una experiencia de software local fluida.
-*   **React.js:** Se encarga de la reactividad de la interfaz. Maneja el estado dinámico de los grafos. Si un nodo cambia a estado "recorrido", React redibuja inmediatamente ese componente. También mapea el índice de la línea de código actual para iluminarla en el panel del editor visual.
-*   **Node.js:** Maneja la lógica pesada en el "proceso principal" (Main Process) de Electron o mediante hilos de ejecución locales. Procesa los algoritmos matemáticos pesados y serializa los "pasos" del recorrido para enviarlos al Frontend de manera estructurada.
+El proyecto está diseñado bajo una **arquitectura monolítica utilizando el patrón MVC (Modelo-Vista-Controlador) dentro del cliente (Client-Side)**. Esto mantiene una separación estricta entre la lógica matemática del grafo, la interfaz reactiva y el flujo de la simulación.
 
 ---
 
-## 🎨 Librerías de Animación y Estilos Recomendadas
+## 🛠️ Arquitectura Monolítica MVC (Client-Side)
 
-Para lograr una interfaz elegante, moderna y con transiciones orgánicas **sin depender de frameworks rígidos de grafos** (como Sigma.js o Cytoscape), implementaremos los nodos y aristas con elementos SVG puros controlados por React, potenciados por:
+Al ser una aplicación web pura, todo el patrón MVC se ejecuta en el navegador del usuario, distribuyéndose de la siguiente manera:
 
-1.  **Framer Motion:** Ideal para animar la creación de nodos (efectos de escala tipo *pop*), cambios de color entre estados (no visitado ➡️ próximo ➡️ visitado) y transiciones en los paneles de código.
-2.  **React Spring:** Basada en física real (tensión y fricción). Excelente para el comportamiento de las aristas (líneas que se extienden fluidamente de un nodo a otro) y para permitir que el usuario arrastre (*drag and drop*) los nodos con físicas suaves.
-3.  **Tailwind CSS:** Para el estilizado general de la aplicación, el panel oscuro (*Dark Mode*) del simulador, botones modernos y el contenedor del código línea por línea.
+*   **MÓDELO (Core Logic):** Clases de JavaScript puro que gestionan la estructura de datos del grafo (listas de adyacencia, nodos, aristas) y los algoritmos. No conocen la existencia de React ni de la interfaz gráfica. Su única tarea es procesar la matemática y generar la "línea de tiempo" de pasos del algoritmo.
+*   **VISTA (UI Components):** Componentes de React estructurados con Tailwind CSS, Framer Motion y React Spring. Su único objetivo es pintar el estado actual del grafo en un lienzo SVG y renderizar el editor de código resaltado.
+*   **CONTROLADOR (Hooks de Estado):** Custom Hooks de React que actúan como intermediarios. Capturan los clicks del usuario (Play, Pause, crear nodo), alteran el Modelo, reciben los datos calculados y coordinan la actualización secuencial de la Vista (las animaciones).
 
 ---
 
 ## 📁 Estructura del Proyecto
 
-Esta es la distribución de carpetas planteada para mantener la separación de responsabilidades dentro de nuestra arquitectura monolítica:
+La distribución de carpetas refleja fielmente el patrón MVC para asegurar que el proyecto sea escalable y fácil de mantener:
 
 ```text
 graph-simulator/
-├── package.json              # Dependencias generales del proyecto
-├── main.js                   # Archivo de entrada de Electron (Main Process)
-├── preload.js                # Puente seguro de comunicación (IPC) entre Node y React
+├── package.json              # Dependencias del proyecto (React, Vite, Animaciones)
+├── index.html                # Punto de entrada HTML5
+├── vite.config.js            # Configuración de Vite
 │
-├── src/                      # --- CAPA DE FRONTEND (React) ---
-│   ├── main.jsx              # Punto de entrada de React
-│   ├── index.css             # Estilos globales y configuración de Tailwind
-│   │
-│   ├── components/           # Componentes reutilizables de la UI
-│   │   ├── Sidebar.jsx       # Selector de algoritmos y controles de velocidad
-│   │   ├── CodeViewer.jsx    # Visor de código fuente con resaltado de línea activa
-│   │   └── ControlPanel.jsx  # Botones de Play, Pause, Step-by-Step, Reiniciar
-│   │
-│   ├── features/             # Módulos específicos de la simulación
-│   │   └── graph/
-│   │       ├── GraphCanvas.jsx   # Contenedor SVG principal donde se dibuja el grafo
-│   │       ├── NodeComponent.jsx # Nodo interactivo (usa Framer Motion para estados)
-│   │       └── EdgeComponent.jsx # Arista conectiva (usa React Spring para crecimiento)
-│   │
-│   └── hooks/                # Custom hooks para control de estados del frontend
-│       └── useGraphState.js  # Controla la cola de pasos de animación actuales
-│
-└── lib/                      # --- CAPA DE BACKEND (Node.js Logic) ---
-    ├── engine/               # Motor de procesamiento de grafos
-    │   ├── Graph.js          # Estructura de datos (Lista de adyacencia/Matriz)
-    │   └── parser.js         # Formateador que traduce la ejecución a "pasos visuales"
+└── src/                      
+    ├── main.jsx              # Punto de entrada de la aplicación
+    ├── index.css             # Estilos globales y configuración de Tailwind
     │
-    └── algorithms/           # Implementación pura de los algoritmos
-        ├── bfs.js            # Retorna un array con el histórico de líneas y nodos visitados
-        ├── dfs.js
-        ├── dijkstra.js
-        └── kruskal.js        # Árbol de expansión mínima
+    │── model/                # --- EL MODELO ---
+    │   ├── Graph.js          # Estructura de datos (Clase Grafo, Nodos y Aristas)
+    │   └── algorithms/       # Algoritmos puros (Devuelven el histórico de pasos)
+    │       ├── bfs.js
+    │       ├── dfs.js
+    │       ├── dijkstra.js
+    │       └── kruskal.js
+    │
+    │── view/                 # --- LA VISTA ---
+    │   ├── components/       # Componentes de la interfaz general
+    │   │   ├── Sidebar.jsx   # Menú lateral y selector de algoritmos
+    │   │   ├── CodeViewer.jsx# Visor de código fuente con resaltado de línea
+    │   │   └── Controls.jsx  # Botones de reproducción (Play, Pause, Step)
+    │   └── canvas/           # Componentes del lienzo del grafo
+    │       ├── GraphCanvas.jsx   # Contenedor SVG principal
+    │       ├── NodeComponent.jsx # Nodo dinámico (Animado con Framer Motion)
+    │       └── EdgeComponent.jsx # Arista conectiva (Animado con React Spring)
+    │
+    └── controller/           # --- EL CONTROLADOR ---
+        ├── useGraphEditor.js # Controla la creación manual de nodos y aristas por el usuario
+        └── useSimulation.js  # Orquestador: ejecuta el algoritmo del modelo y despacha los pasos a la vista
