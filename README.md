@@ -31,7 +31,7 @@ graph-simulator/
     ├── index.css             # Estilos globales y configuración de Tailwind
     │
     ├── model/                # --- 1. CAPA MODELO (Lógica Pura) ---
-    │   ├── entities/         # Estructuras de datos base
+    │   ├── obj/         # Estructuras de datos base
     │   │   ├── Graph.js      # Clase Grafo (Lista de adyacencia y pesos)
     │   │   ├── Node.js       # Entidad Nodo (Coordenadas x, y, id)
     │   │   └── Edge.js       # Entidad Arista (Origen, Destino, Peso)
