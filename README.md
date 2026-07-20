@@ -1,24 +1,24 @@
-# 📊 Graph Simulator - Web Application (MVC Architecture)
+# 📊 Graph Simulator - Web Application
 
 ¡Bienvenido al simulador interactivo de algoritmos de grafos! Esta es una aplicación web interactiva diseñada para visualizar, simular y analizar el comportamiento de algoritmos clásicos de grafos (BFS, DFS, Dijkstra, Kruskal/Prim) en tiempo real, directamente desde el navegador.
 
-El proyecto está diseñado bajo una **arquitectura monolítica utilizando el patrón MVC (Modelo-Vista-Controlador) dentro del cliente (Client-Side)**. Esto mantiene una separación estricta entre la lógica matemática del grafo, la interfaz reactiva y el flujo de la simulación.
+El proyecto está diseñado bajo una **Arquitectura en Capas basada en el Patrón MVC (Client-Side)**. Toda la lógica de negocio, el procesamiento de los grafos y el renderizado visual ocurren en el navegador del usuario, garantizando una respuesta inmediata y modularidad estricta.
 
 ---
 
-## 🛠️ Arquitectura Monolítica MVC (Client-Side)
+## 🏗️ Estructura de la Arquitectura (MVC en Capas)
 
-Al ser una aplicación web pura, todo el patrón MVC se ejecuta en el navegador del usuario, distribuyéndose de la siguiente manera:
+Para evitar que la lógica matemática de los grafos ensucie los componentes de la interfaz, dividimos el monolito en tres capas de responsabilidad única:
 
-*   **MÓDELO (Core Logic):** Clases de JavaScript puro que gestionan la estructura de datos del grafo (listas de adyacencia, nodos, aristas) y los algoritmos. No conocen la existencia de React ni de la interfaz gráfica. Su única tarea es procesar la matemática y generar la "línea de tiempo" de pasos del algoritmo.
-*   **VISTA (UI Components):** Componentes de React estructurados con Tailwind CSS, Framer Motion y React Spring. Su único objetivo es pintar el estado actual del grafo en un lienzo SVG y renderizar el editor de código resaltado.
-*   **CONTROLADOR (Hooks de Estado):** Custom Hooks de React que actúan como intermediarios. Capturan los clicks del usuario (Play, Pause, crear nodo), alteran el Modelo, reciben los datos calculados y coordinan la actualización secuencial de la Vista (las animaciones).
+*   **📦 El Modelo (Capa de Dominio / Datos):** Clases y funciones en JavaScript puro (ES6+). Define qué es un Grafo, un Nodo y una Arista a nivel matemático. Ejecuta los algoritmos de recorrido y devuelve una "línea de tiempo de eventos" (un historial que describe qué pasa paso a paso). *No sabe qué es React ni qué es un píxel.*
+*   **🎮 El Controlador (Capa de Aplicación / Hooks):** Custom Hooks de React que actúan como directores de orquesta. Manejan los temporizadores (Play, Pause, control de velocidad), capturan las acciones del usuario, llaman al Modelo para procesar los datos y despachan los cambios ordenadamente a la Vista.
+*   **🎨 La Vista (Capa de Presentación / UI):** Componentes de React estilizados con **Tailwind CSS**. Reciben los estados del Controlador y se encargan exclusivamente de pintar el lienzo SVG y aplicar micro-animaciones dinámicas mediante **Framer Motion** y **React Spring**.
 
 ---
 
 ## 📁 Estructura del Proyecto
 
-La distribución de carpetas refleja fielmente el patrón MVC para asegurar que el proyecto sea escalable y fácil de mantener:
+La distribución de carpetas refleja la arquitectura para asegurar un código limpio, legible y escalable:
 
 ```text
 graph-simulator/
@@ -30,24 +30,27 @@ graph-simulator/
     ├── main.jsx              # Punto de entrada de la aplicación
     ├── index.css             # Estilos globales y configuración de Tailwind
     │
-    │── model/                # --- EL MODELO ---
-    │   ├── Graph.js          # Estructura de datos (Clase Grafo, Nodos y Aristas)
-    │   └── algorithms/       # Algoritmos puros (Devuelven el histórico de pasos)
+    ├── model/                # --- 1. CAPA MODELO (Lógica Pura) ---
+    │   ├── entities/         # Estructuras de datos base
+    │   │   ├── Graph.js      # Clase Grafo (Lista de adyacencia y pesos)
+    │   │   ├── Node.js       # Entidad Nodo (Coordenadas x, y, id)
+    │   │   └── Edge.js       # Entidad Arista (Origen, Destino, Peso)
+    │   └── algorithms/       # Algoritmos que retornan el histórico de pasos
     │       ├── bfs.js
     │       ├── dfs.js
     │       ├── dijkstra.js
     │       └── kruskal.js
     │
-    │── view/                 # --- LA VISTA ---
-    │   ├── components/       # Componentes de la interfaz general
-    │   │   ├── Sidebar.jsx   # Menú lateral y selector de algoritmos
-    │   │   ├── CodeViewer.jsx# Visor de código fuente con resaltado de línea
-    │   │   └── Controls.jsx  # Botones de reproducción (Play, Pause, Step)
-    │   └── canvas/           # Componentes del lienzo del grafo
-    │       ├── GraphCanvas.jsx   # Contenedor SVG principal
-    │       ├── NodeComponent.jsx # Nodo dinámico (Animado con Framer Motion)
-    │       └── EdgeComponent.jsx # Arista conectiva (Animado con React Spring)
+    ├── controller/           # --- 2. CAPA CONTROLADOR (Estado y Flujo) ---
+    │   ├── useGraphEditor.js # Maneja la creación, eliminación y arrastre de nodos
+    │   └── useSimulation.js  # Reloj de la simulación (Play, Pause, Step-by-Step)
     │
-    └── controller/           # --- EL CONTROLADOR ---
-        ├── useGraphEditor.js # Controla la creación manual de nodos y aristas por el usuario
-        └── useSimulation.js  # Orquestador: ejecuta el algoritmo del modelo y despacha los pasos a la vista
+    └── view/                 # --- 3. CAPA VISTA (Interfaz Gráfica) ---
+        ├── components/       # Componentes estructurales de la UI
+        │   ├── Sidebar.jsx   # Menú lateral y selector de algoritmos
+        │   ├── CodeViewer.jsx# Visor del pseudocódigo con resaltado de línea activa
+        │   └── Controls.jsx  # Botones de reproducción (Play, Pause, Velocidad)
+        └── canvas/           # El lienzo del grafo interactivo
+            ├── GraphCanvas.jsx   # Contenedor SVG principal (Viewport)
+            ├── NodeComponent.jsx # Renderizado del Nodo (Animado con Framer Motion)
+            └── EdgeComponent.jsx # Renderizado de la Arista (Animado con React Spring)
