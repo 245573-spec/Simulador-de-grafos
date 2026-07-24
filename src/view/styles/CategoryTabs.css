@@ -9,7 +9,7 @@
 .category-tabs{
 
     display:flex;
-
+    background-color: #1EBC9B;
     justify-content:center;
 
     gap:20px;

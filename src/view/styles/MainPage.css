@@ -12,7 +12,7 @@
 .workspace{
 
     display:flex;
-
+    background-color: #2D3E50;
     gap:25px;
 
     padding:20px;

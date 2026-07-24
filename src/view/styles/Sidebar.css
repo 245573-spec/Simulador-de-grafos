@@ -3,20 +3,14 @@
     flex-direction: column;
     gap: 15px;
 }
-.algorithm-list{
+.algorithm-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
 
-    list-style:none;
-
-    padding:0;
-
-    margin-top:20px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:10px;
-
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 .algorithm-list button{
 
@@ -37,4 +31,10 @@
 
     background:#333;
 
+}
+.algorithm-container {
+    background: #1BBC9B;
+    border-radius: 16px;
+    overflow: hidden;
+    padding: 20px;
 }

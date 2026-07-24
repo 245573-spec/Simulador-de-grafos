@@ -4,7 +4,6 @@
     "\\public",
     "\\src",
     "\\src\\assets",
-    "\\src\\model\\obj",
     "\\src\\view",
     "\\src\\view\\canvas",
     "\\src\\view\\canvas\\renders",
