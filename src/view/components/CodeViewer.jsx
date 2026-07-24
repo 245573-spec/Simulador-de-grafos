@@ -1,17 +1,25 @@
-/*
- * CodeViewer
- * ----------
- * Muestra el pseudocódigo del algoritmo seleccionado.
- */
-function CodeViewer(){
-    return(
-        <section className="code-viewer">
-            <h2>Código xdxd</h2>
+import "../styles/CodeViewer.css";
 
-            <pre className="code-container">
-{`Seleccione un algoritmo para visualizar su pseudocódigo.`}
-            </pre>
+function CodeViewer() {
+
+    return (
+
+        <section className="code-viewer">
+
+            <h2>Código</h2>
+
+            <div className="code-container">
+
+                <p>
+                    Seleccione un algoritmo para visualizar su pseudocódigo.
+                </p>
+
+            </div>
+
         </section>
+
     );
+
 }
+
 export default CodeViewer;

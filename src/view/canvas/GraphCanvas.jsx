@@ -1,3 +1,4 @@
+import "../styles/GraphCanvas.css"
 /*
  * GraphCanvas
  * -----------

@@ -1,3 +1,4 @@
+import "../styles/BottomToolbar.css"
 /*
  * BottomToolbar
  * -------------

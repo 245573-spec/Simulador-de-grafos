@@ -1,3 +1,4 @@
+import "../styles/Sidebar.css"
 /*
  * Sidebar
  * -------
@@ -8,27 +9,39 @@ function Sidebar() {
 
     return (
 
-        <aside className="sidebar">
+<aside className="sidebar">
 
-            <h2>Algoritmos</h2>
+    <h2>Algoritmos</h2>
 
-            <ul className="algorithm-list">
+    <ul className="algorithm-list">
 
-                <li>BFS</li>
+    <li>
+        <button>BFS</button>
+    </li>
 
-                <li>DFS</li>
+    <li>
+        <button>DFS</button>
+    </li>
 
-                <li>Dijkstra</li>
+    <li>
+        <button>Dijkstra</button>
+    </li>
 
-                <li>Bellman-Ford</li>
+    <li>
+        <button>Bellman-Ford</button>
+    </li>
 
-                <li>Prim</li>
+    <li>
+        <button>Prim</button>
+    </li>
 
-                <li>Kruskal</li>
+    <li>
+        <button>Kruskal</button>
+    </li>
 
-            </ul>
+</ul>
 
-        </aside>
+</aside>
 
     );
 
