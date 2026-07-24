@@ -1,0 +1,9 @@
+.workspace {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+
+.left-panel {
+    width: 280px;
+}

@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\public",
+    "\\src",
+    "\\src\\assets",
+    "\\src\\model\\obj",
+    "\\src\\view",
+    "\\src\\view\\canvas",
+    "\\src\\view\\canvas\\renders",
+    "\\src\\view\\components",
+    "\\src\\view\\pages"
+  ],
+  "SelectedNode": "\\src\\App.jsx",
+  "PreviewInSolutionExplorer": false
+}
