@@ -10,10 +10,7 @@ function CodeViewer() {
 
             <div className="code-container">
 
-                <p>
-                    Seleccione un algoritmo para visualizar su pseudocódigo.
-                </p>
-
+                
             </div>
 
         </section>

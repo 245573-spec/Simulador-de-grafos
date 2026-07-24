@@ -13,33 +13,25 @@ function Sidebar() {
 
     <h2>Algoritmos</h2>
 
-    <ul className="algorithm-list">
+    <div className="algorithm-container">
 
-    <li>
-        <button>BFS</button>
-    </li>
+        <ul className="algorithm-list">
 
-    <li>
-        <button>DFS</button>
-    </li>
+            <li><button>BFS</button></li>
 
-    <li>
-        <button>Dijkstra</button>
-    </li>
+            <li><button>DFS</button></li>
 
-    <li>
-        <button>Bellman-Ford</button>
-    </li>
+            <li><button>Dijkstra</button></li>
 
-    <li>
-        <button>Prim</button>
-    </li>
+            <li><button>Bellman-Ford</button></li>
 
-    <li>
-        <button>Kruskal</button>
-    </li>
+            <li><button>Prim</button></li>
 
-</ul>
+            <li><button>Kruskal</button></li>
+
+        </ul>
+
+    </div>
 
 </aside>
 
