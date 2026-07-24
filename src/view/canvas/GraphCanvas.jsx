@@ -13,9 +13,7 @@ function GraphCanvas() {
 
             <h2>Área del Grafo</h2>
 
-            <div className="canvas-container">
-                Aquí se mostrará el grafo.
-            </div>
+            <canvas id="graphcanva" class="-full h-64 bg-slate-100 border-2 border-slate-300 rounded-lg shadow-inner"></canvas>
 
         </main>
 
