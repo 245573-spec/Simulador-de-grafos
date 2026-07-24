@@ -1,3 +1,4 @@
+import "../styles/CategoryTabs.css";
 /*
  * CategoryTabs
  * ------------
@@ -6,18 +7,11 @@
 function CategoryTabs(){
 
     return(
-        <nav className="CategoryTabs">
-            <button className="tab-buttom">
-                Recorridos
-            </button>
-            <button className="tab-buttom">
-                Caminos Mínimos
-            </button>
-            <button className="tab-buttom">
-                Árboles de expansión
-            </button>
-        
-        </nav>
+        <div className="category-tabs">
+    <button>Recorridos</button>
+    <button>Caminos mínimos</button>
+    <button>Árboles de expansión</button>
+</div>
 
 
 

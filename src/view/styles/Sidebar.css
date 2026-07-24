@@ -1,0 +1,40 @@
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.algorithm-list{
+
+    list-style:none;
+
+    padding:0;
+
+    margin-top:20px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+}
+.algorithm-list button{
+
+    width:100%;
+
+    padding:12px;
+
+    text-align:left;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+}
+.algorithm-list button:hover{
+
+    background:#333;
+
+}

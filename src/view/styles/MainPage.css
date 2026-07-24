@@ -1,9 +1,36 @@
-.workspace {
-    display: flex;
-    gap: 20px;
-    padding: 20px;
-}
+.left-panel{
 
-.left-panel {
-    width: 280px;
+    width: 300px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 20px;
+
+}
+.workspace{
+
+    display:flex;
+
+    gap:25px;
+
+    padding:20px;
+
+    align-items:flex-start;
+}
+.graph-canvas{
+
+    flex: 1;
+
+    min-height: 600px;
+
+    border: 2px solid #555;
+
+    border-radius: 10px;
+
+}
+.variable-panel{
+
+    width:250px;
 }

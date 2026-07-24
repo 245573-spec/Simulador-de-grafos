@@ -1,0 +1,6 @@
+.bottom-toolbar {
+    display: flex;
+    gap: 150px;
+
+    padding: 15px 30px;
+}

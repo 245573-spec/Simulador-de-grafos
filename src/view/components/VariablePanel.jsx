@@ -1,8 +1,4 @@
-/*
- * VariablePanel
- * -------------
- * Muestra el estado de las variables del algoritmo en ejecución.
- */
+import "../styles/VariablePanel.css";
 
 function VariablePanel() {
 
@@ -12,13 +8,27 @@ function VariablePanel() {
 
             <h2>Variables</h2>
 
-            <div className="variables-container">
+            <div className="variable-card">
 
-                <p><strong>Nodo actual:</strong> -</p>
+                <h3>Nodo actual</h3>
 
-                <p><strong>Visitados:</strong> -</p>
+                <p>-</p>
 
-                <p><strong>Estructura auxiliar:</strong> -</p>
+            </div>
+
+            <div className="variable-card">
+
+                <h3>Visitados</h3>
+
+                <p>-</p>
+
+            </div>
+
+            <div className="variable-card">
+
+                <h3>Estructura auxiliar</h3>
+
+                <p>-</p>
 
             </div>
 
