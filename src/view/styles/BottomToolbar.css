@@ -1,6 +1,18 @@
 .bottom-toolbar {
     display: flex;
     gap: 150px;
-
     padding: 15px 30px;
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+
+    background-color: var(--bg);
+    align-items: center;
+    justify-content: center;
+}
+
+.bottom-toolbar>button{
+    border-color: var(--border);
+    background-color: var(--bg);
+
 }
