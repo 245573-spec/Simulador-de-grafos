@@ -16,7 +16,7 @@ function BottomToolbar() {
 
     return (
     <footer className="w-full shrink-0 flex justify-center p-4">
-      <div className="mx-auto max-w-fit rounded-full border border-[#2DD4BF]/20 bg-[#111827]/90 p-3 shadow-xl backdrop-blur-md">
+      <div className="mx-auto max-w-fit rounded-xl border border-[#2DD4BF]/20 bg-[#111827]/90 p-3 shadow-xl backdrop-blur-md">
         
         <div className="flex items-center justify-center gap-3 sm:gap-5">
           

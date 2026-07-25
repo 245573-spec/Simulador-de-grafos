@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Header from "../components/Header";
 import CategoryTabs from "../components/CategoryTabs";
@@ -6,10 +6,19 @@ import Sidebar from "../components/Sidebar";
 import CodeViewer from "../components/CodeViewer";
 import VariablePanel from "../components/VariablePanel";
 import BottomToolbar from "../components/BottomToolbar";
+
+import { code_bfs } from "../components/algorithmsView/bfsView"; 
+import { code_dfs } from "../components/algorithmsView/dfsView"; 
+import { code_prim } from "../components/algorithmsView/primView"; 
+import { code_kruskal } from "../components/algorithmsView/kruskalView"; 
+import { code_bellman } from "../components/algorithmsView/bellman-fordView"; 
+import { code_dijkstra } from "../components/algorithmsView/dijkstraView"; 
+
 //import "../styles/MainPage.css";
 import "../../index.css";
 
 import GraphCanvas from"../canvas/GraphCanvas"
+import { act } from "react";
 /*
 Funcion MainPage para cargar la página principal
 va a cargar los archivos como Header, CategoryTabs, Sidebar ,etc...
@@ -21,6 +30,14 @@ function MainPage() {
         "Caminos minimos": ["Dijkstra", "Bellman-Ford"],
         "Arboles de expansion": ["Prim", "Kruskal"],
     };
+    const codes = {
+        "DFS": code_dfs(),
+        "BFS": code_bfs(),
+        "Prim": code_prim(),
+        "Kruskal": code_kruskal(),
+        "Dijkstra": code_dijkstra(),
+        "Bellman-Ford": code_bellman(),
+    }
 
     const [activeCategory, setActiveCategory] = useState("Recorridos");
 
@@ -56,7 +73,8 @@ function MainPage() {
                     onSelectAlgorithm = {setSelectedAlgo}  />
             </div>
             <div className="flex-1 min-h-0">
-                <CodeViewer />
+                <CodeViewer
+                code = {codes[selectedAlgo]} />
             </div>
             </aside>
 
@@ -70,7 +88,6 @@ function MainPage() {
             </div>
             </section>
 
-            {/* PANEL DERECHO: Variables (3 de 12 cols) */}
             <aside className="col-span-5 flex flex-col gap-3 overflow-y-auto h-full">
             <VariablePanel />
             </aside>
