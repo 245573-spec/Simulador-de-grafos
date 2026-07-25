@@ -1,5 +1,10 @@
 import "../styles/VariablePanel.css";
 
+/*
+ * VariablePanel
+ * -------------
+ * Panel lateral derecho que muestra el estado de las variables (Nodo actual, Visitados, Cola/Pila).
+ */
 function VariablePanel({
   currentNode = "A",
   visited = [],
@@ -7,55 +12,49 @@ function VariablePanel({
   auxLabel = "Cola / Pila",
 }) {
   return (
-    <aside className="flex flex-col gap-3 rounded-2xl border border-slate-800 bg-[#111827] p-4 shadow-xl">
+    <aside className="variable-panel-container">
       {/* Título de la sección */}
-      <h2 className="px-1 text-xs font-semibold uppercase tracking-wider text-slate-400">
+      <h2 className="variable-panel-title">
         Variables
       </h2>
 
-      <div className="flex flex-col gap-2.5">
+      <div className="variable-cards-wrapper">
         {/* 1. Nodo Actual */}
-        <div className="flex items-center justify-between rounded-xl border border-slate-800/80 bg-[#0d1117] p-3">
-          <span className="text-xs font-medium text-slate-400">Nodo actual</span>
-          <span className="flex h-7 w-7 items-center justify-center rounded-lg border border-[#2DD4BF]/30 bg-[#2DD4BF]/10 font-mono text-xs font-bold text-[#2DD4BF]">
+        <div className="variable-card card-row">
+          <span className="variable-label">Nodo actual</span>
+          <span className="current-node-badge">
             {currentNode}
           </span>
         </div>
 
-        {/* 2. Nodos Visitados */}
-        <div className="flex flex-col gap-1.5 rounded-xl border border-slate-800/80 bg-[#0d1117] p-3">
-          <span className="text-xs font-medium text-slate-400">Visitados</span>
-          <div className="flex min-h-[32px] flex-wrap items-center gap-1.5 font-mono text-xs">
+        {/* 2. Visitados */}
+        <div className="variable-card card-column">
+          <span className="variable-label">Visitados</span>
+          <div className="variable-list font-mono">
             {visited.length > 0 ? (
               visited.map((node, index) => (
-                <span
-                  key={index}
-                  className="rounded-md border border-slate-700 bg-slate-800 px-2 py-0.5 text-slate-200"
-                >
+                <span key={index} className="variable-item">
                   {node}
                 </span>
               ))
             ) : (
-              <span className="text-slate-600">-</span>
+              <span className="variable-empty">-</span>
             )}
           </div>
         </div>
 
-        {/* 3. Estructura Auxiliar (Cola, Pila, Distancias, etc.) */}
-        <div className="flex flex-col gap-1.5 rounded-xl border border-slate-800/80 bg-[#0d1117] p-3">
-          <span className="text-xs font-medium text-slate-400">{auxLabel}</span>
-          <div className="flex min-h-[32px] flex-wrap items-center gap-1.5 font-mono text-xs">
+        {/* 3. Estructura Auxiliar (Cola / Pila) */}
+        <div className="variable-card card-column">
+          <span className="variable-label">{auxLabel}</span>
+          <div className="variable-list font-mono">
             {Array.isArray(auxiliaryStructure) && auxiliaryStructure.length > 0 ? (
               auxiliaryStructure.map((item, index) => (
-                <span
-                  key={index}
-                  className="rounded-md border border-slate-800 bg-slate-900/80 px-2 py-0.5 text-slate-300"
-                >
+                <span key={index} className="variable-item">
                   {item}
                 </span>
               ))
             ) : (
-              <span className="text-slate-600">
+              <span className="variable-empty">
                 {typeof auxiliaryStructure === "string" ? auxiliaryStructure : "-"}
               </span>
             )}

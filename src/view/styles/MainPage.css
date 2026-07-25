@@ -1,36 +1,75 @@
-.left-panel{
-
-    width: 300px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 20px;
-
+/* Layout Principal */
+.main-page-wrapper {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: var(--bg);
+  color: var(--text-h);
 }
-.workspace{
 
-    display:flex;
-    background-color: #2D3E50;
-    gap:25px;
-
-    padding:20px;
-
-    align-items:flex-start;
+/* Grid de la aplicación */
+.main-layout-grid {
+  display: grid;
+  flex: 1;
+  /* 6Fr para panel izq, 13Fr para centro, 5Fr para panel derecho */
+  grid-template-columns: 370px 1fr 240px; 
+  gap: 20px;
+  padding: 20px;
+  overflow: hidden;
+  min-height: 0;
 }
-.graph-canvas{
 
-    flex: 1;
-
-    min-height: 600px;
-
-    border: 2px solid #555;
-
-    border-radius: 10px;
-
+/* Panel Izquierdo (Algoritmos y Código) */
+.left-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: hidden;
+  height: 100%;
 }
-.variable-panel{
 
-    width:250px;
+.sidebar-wrapper {
+  flex-shrink: 0;
+}
+
+.code-viewer-wrapper-slot {
+  flex: 1;
+  min-height: 0;
+}
+
+/* Panel Centro (Lienzo y Toolbar) */
+.center-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.canvas-wrapper {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  /* Borde y fondo del contenedor del Lienzo */
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background-color: #0b0f19;
+}
+
+.toolbar-wrapper {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+}
+
+/* Panel Derecho (Variables) */
+.right-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+  height: 100%;
 }

@@ -1,43 +1,105 @@
-.variable-panel{
-
-    width:250px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:20px;
-
+/* Contenedor principal del panel */
+.variable-panel-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background-color: var(--code-bg);
+  padding: 20px;
+  box-shadow: var(--shadow);
 }
-.variable-panel h2{
 
-    text-align:center;
-
-    margin:0;
-
+/* Título de la sección */
+.variable-panel-title {
+  font-size: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-h);
+  padding: 0 4px;
+  margin: 0;
 }
-.variable-card{
 
-    border:2px solid #444;
-    background-color: #1EBC9B;
-    border-radius:10px;
-
-    padding:15px;
-
+/* Envoltorio para las tarjetas de variables */
+.variable-cards-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
-.variable-card h3{
-    
-    margin:0 0 10px 0;
 
-    font-size:18px;
-
+/* Estilo base de cada tarjeta */
+.variable-card {
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background-color: var(--card-inner-bg); /* Cambiado a --card-inner-bg */
+  padding: 16px;
 }
-.variable-card p{
 
-    margin:0;
+.variable-card.card-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-    font-family:monospace;
+.variable-card.card-column {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
 
-    font-size:16px;
+/* Etiquetas de nombre de variable */
+.variable-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text);
+}
 
+/* Badge destacado para el Nodo Actual */
+.current-node-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 32px;
+  width: 32px;
+  min-width: 32px;
+  min-height: 32px;
+
+  border-radius: 8px;
+  border: 1px solid var(--accent-border);
+  background-color: var(--accent-light-bg);
+
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* Listado de ítems dentro de una variable */
+.variable-list {
+  display: flex;
+  min-height: 32px;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.font-mono {
+  font-family: var(--mono);
+}
+
+/* Chips/Badges de cada elemento (Visitados, Cola) */
+.variable-item {
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background-color: var(--code-bg);
+  padding: 2px 8px;
+  color: var(--text-h);
+}
+
+/* Indicador vacío */
+.variable-empty {
+  color: rgba(156, 163, 175, 0.4);
 }

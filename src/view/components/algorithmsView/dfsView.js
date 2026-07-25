@@ -1,6 +1,5 @@
 export function code_dfs (){
     const dfs = [
-        { hover: false, content: "// Selecciona un algoritmo para ver el pseudocódigo" },
         { hover: true,  content: "fn dfs(grafo: &Grafo, nodo_inicio: usize) {" },
         { hover: false, content: "    let mut visitados = HashSet::new();" },
         { hover: false, content: "    let mut pila = Vec::new();" },

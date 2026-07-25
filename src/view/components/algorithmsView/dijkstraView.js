@@ -1,6 +1,5 @@
 export function code_dijkstra(){
     const dijkstra = [
-        { hover: false, content: "// Selecciona un algoritmo para ver el pseudocódigo" },
         { hover: true,  content: "fn dijkstra(grafo: &Grafo, inicio: usize) -> Vec<usize> {" },
         { hover: false, content: "    let mut distancias = vec![usize::MAX; grafo.len()];" },
         { hover: false, content: "    let mut heap = BinaryHeap::new();" },

@@ -1,6 +1,5 @@
 export function code_kruskal(){
     const kruskal = [
-        { hover: false, content: "// Selecciona un algoritmo para ver el pseudocódigo" },
         { hover: true,  content: "fn kruskal(num_nodos: usize, mut aristas: Vec<Arista>) -> Vec<Arista> {" },
         { hover: false, content: "    // Ordenar aristas por peso de menor a mayor" },
         { hover: false, content: "    aristas.sort_by_key(|a| a.peso);" },

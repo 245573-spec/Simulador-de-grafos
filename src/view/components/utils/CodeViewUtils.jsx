@@ -1,50 +1,49 @@
 import React from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import "../../styles/AnimationCode.css";
 
 export function AnimationCode({ lines }) {
   if (!lines || lines.length === 0) return null;
 
   return (
-    <div className="flex flex-col font-mono text-xs">
-      {lines.map((line, index) => {
-        const isHovered = line.hover;
+    <div className="code-viewer-container">
+      <div className="code-lines-wrapper">
+        {lines.map((line, index) => {
+          const isActive = line.hover || line.active;
 
-        return (
-          <div
-            key={index}
-            className={`flex items-center px-2 py-0.5 rounded transition-all duration-150 ${
-              isHovered
-                ? "bg-[#2DD4BF]/15 border-l-2 border-[#2DD4BF]"
-                : "border-l-2 border-transparent hover:bg-slate-800/50"
-            }`}
-          >
-            <span className="w-6 select-none text-right pr-3 text-slate-600 text-[10px]">
-              {index + 1}
-            </span>
+          return (
+            <div
+              key={index}
+              className={`code-line-row ${isActive ? "active-pill" : ""}`}
+            >
+              {/* Número de línea */}
+              <span className={`line-number ${isActive ? "active-number" : ""}`}>
+                {index + 1}
+              </span>
 
-            <div className="flex-1 min-w-0">
-              <SyntaxHighlighter
-                language="rust"
-                style={vscDarkPlus}
-                customStyle={{
-                  margin: 0,
-                  padding: 0,
-                  background: "transparent",
-                  fontSize: "0.75rem",
-                  fontFamily: "monospace",
-                }}
-                /* Para evitar que inserte etiquetas <pre> pesadas por cada línea */
-                PreTag="span" 
-                CodeTag="span"
-              >
-                {/* Si la línea está vacía, ponemos un espacio para mantener la altura */}
-                {line.content || " "}
-              </SyntaxHighlighter>
+              {/* Contenido del código */}
+              <div className="line-content">
+                <SyntaxHighlighter
+                  language="rust"
+                  style={vscDarkPlus}
+                  customStyle={{
+                    margin: 0,
+                    padding: 0,
+                    background: "transparent",
+                    fontSize: "0.825rem",
+                    fontFamily: "var(--mono)",
+                  }}
+                  PreTag="span"
+                  CodeTag="span"
+                >
+                  {line.content || " "}
+                </SyntaxHighlighter>
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 }

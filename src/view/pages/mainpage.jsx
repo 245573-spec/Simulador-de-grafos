@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import Header from "../components/Header";
 import CategoryTabs from "../components/CategoryTabs";
@@ -6,6 +6,7 @@ import Sidebar from "../components/Sidebar";
 import CodeViewer from "../components/CodeViewer";
 import VariablePanel from "../components/VariablePanel";
 import BottomToolbar from "../components/BottomToolbar";
+import GraphCanvas from "../canvas/GraphCanvas";
 
 import { code_bfs } from "../components/algorithmsView/bfsView"; 
 import { code_dfs } from "../components/algorithmsView/dfsView"; 
@@ -14,86 +15,90 @@ import { code_kruskal } from "../components/algorithmsView/kruskalView";
 import { code_bellman } from "../components/algorithmsView/bellman-fordView"; 
 import { code_dijkstra } from "../components/algorithmsView/dijkstraView"; 
 
-//import "../styles/MainPage.css";
-import "../../index.css";
+import "../styles/MainPage.css";
 
-import GraphCanvas from"../canvas/GraphCanvas"
-import { act } from "react";
 /*
-Funcion MainPage para cargar la página principal
-va a cargar los archivos como Header, CategoryTabs, Sidebar ,etc...
-*/
+ * MainPage
+ * --------
+ * Vista principal que orquesta el layout de la aplicación y el estado global de algoritmos.
+ */
 function MainPage() {
 
-    const algorithmsCategory = {
-        "Recorridos": ["BFS", "DFS"],
-        "Caminos minimos": ["Dijkstra", "Bellman-Ford"],
-        "Arboles de expansion": ["Prim", "Kruskal"],
-    };
-    const codes = {
-        "DFS": code_dfs(),
-        "BFS": code_bfs(),
-        "Prim": code_prim(),
-        "Kruskal": code_kruskal(),
-        "Dijkstra": code_dijkstra(),
-        "Bellman-Ford": code_bellman(),
-    }
+  const algorithmsCategory = {
+    "Recorridos": ["BFS", "DFS"],
+    "Caminos minimos": ["Dijkstra", "Bellman-Ford"],
+    "Arboles de expansion": ["Prim", "Kruskal"],
+  };
 
-    const [activeCategory, setActiveCategory] = useState("Recorridos");
+  const codes = {
+    "DFS": code_dfs(),
+    "BFS": code_bfs(),
+    "Prim": code_prim(),
+    "Kruskal": code_kruskal(),
+    "Dijkstra": code_dijkstra(),
+    "Bellman-Ford": code_bellman(),
+  };
 
-    const [selectedAlgo, setSelectedAlgo] = useState(
+  const [activeCategory, setActiveCategory] = useState("Recorridos");
+
+  const [selectedAlgo, setSelectedAlgo] = useState(
     algorithmsCategory["Recorridos"][0]
-    );
+  );
 
-    const handleSelectCategory = (category) => {
+  const handleSelectCategory = (category) => {
     setActiveCategory(category);
     
     const newAlgoList = algorithmsCategory[category];
-        if (newAlgoList && newAlgoList.length > 0) {
-        setSelectedAlgo(newAlgoList[0]);
-        }
-    };
+    if (newAlgoList && newAlgoList.length > 0) {
+      setSelectedAlgo(newAlgoList[0]);
+    }
+  };
 
+  return (
+    <div className="main-page-wrapper">
+      <Header />
 
-    return (
-        <div className="flex h-screen w-screen flex-col overflow-hidden bg-[#0b0f17] text-slate-100">
-        <Header />
+      <CategoryTabs
+        activeCategory={activeCategory}
+        onSelectCategory={handleSelectCategory} 
+      />
 
-        <CategoryTabs
-        activeCategory = {activeCategory}
-        onSelectCategory= {handleSelectCategory} />
+      {/* Rejilla Principal de Trabajo */}
+      <main className="main-layout-grid">
+        
+        {/* Panel Izquierdo: Algoritmos y Código */}
+        <aside className="left-panel">
+          <div className="sidebar-wrapper">
+            <Sidebar 
+              algorithms={algorithmsCategory[activeCategory]}
+              selectedAlgo={selectedAlgo}
+              onSelectAlgorithm={setSelectedAlgo}  
+            />
+          </div>
+          <div className="code-viewer-wrapper-slot">
+            <CodeViewer code={codes[selectedAlgo]} />
+          </div>
+        </aside>
 
-        <div className="grid flex-1 grid-cols-[repeat(24,minmax(0,1fr))] gap-4 p-4 overflow-hidden min-h-0">
-            
-            <aside className="col-span-6 flex flex-col gap-3 overflow-hidden h-full">
-            <div className="shrink-0">
-                <Sidebar 
-                    algorithms = {algorithmsCategory[activeCategory]}
-                    selectedAlgo = {selectedAlgo}
-                    onSelectAlgorithm = {setSelectedAlgo}  />
-            </div>
-            <div className="flex-1 min-h-0">
-                <CodeViewer
-                code = {codes[selectedAlgo]} />
-            </div>
-            </aside>
+        {/* Panel Centro: Lienzo de Grafo y Toolbar */}
+        <section className="center-panel">
+          <div className="canvas-wrapper">
+            <GraphCanvas />
+          </div>
 
-            <section className="col-span-13 flex flex-col gap-3 h-full relative overflow-hidden">
-            <div className="flex-1 min-h-0 relative">
-                <GraphCanvas />
-            </div>
+          <div className="toolbar-wrapper">
+            <BottomToolbar />
+          </div>
+        </section>
 
-            <div className="shrink-0 flex justify-center">
-                <BottomToolbar />
-            </div>
-            </section>
+        {/* Panel Derecho: Estado de Variables */}
+        <aside className="right-panel">
+          <VariablePanel />
+        </aside>
 
-            <aside className="col-span-5 flex flex-col gap-3 overflow-y-auto h-full">
-            <VariablePanel />
-            </aside>
-
-        </div>
-        </div>
-    );
+      </main>
+    </div>
+  );
 }
+
 export default MainPage;
