@@ -1,4 +1,6 @@
 //Implementacion del grafo
+import { Edge } from "./Edge";
+import { Node } from "./Node";
 
 export class Graph{
     /**
@@ -124,8 +126,7 @@ export class Graph{
    * @returns {Nodes[]} Lista de todas las aristas para renderizado.
    */
     getAllNodes() {
-        const allNodes = [];
-        allNodes = Array.from(this.nodes.values());
-        return allNodes;
+        //eee
+        return Array.from(this.nodes.values());
     }
 }

@@ -1,5 +1,15 @@
 import { useState } from "react";
 
+// NUEVO: Importamos el simulador, el algoritmo BFS y el grafo que tu equipo preparó
+import { useSimulation } from "../../controller/useSimulation";
+import { runBFS } from "../../model/algorithms/bfs";
+import { runDFS } from "../../model/algorithms/dfs";
+import { runDijkstra } from "../../model/algorithms/dijkstra";
+import { runKruskal } from "../../model/algorithms/kruskal";
+import { runPrim } from "../../model/algorithms/prim";
+import { runBellmanFord } from "../../model/algorithms/bellman-ford";
+import { graph } from "../../controller/useGraphEditor";
+
 import Header from "../components/Header";
 import CategoryTabs from "../components/CategoryTabs";
 import Sidebar from "../components/Sidebar";
@@ -45,6 +55,38 @@ function MainPage() {
     algorithmsCategory["Recorridos"][0]
   );
 
+  // NUEVO: Estado para guardar el historial de pasos calculados por el algoritmo
+  const [simulationSteps, setSimulationSteps] = useState([]);
+  
+  // NUEVO: Inicializamos el simulador pasándole los pasos y la velocidad en milisegundos (ej: 1000ms = 1s)
+  const { currentFrame, play, reset } = useSimulation(simulationSteps, 1000);
+
+  // NUEVO: Función que conecta el botón "Ejecutar" con el algoritmo seleccionado
+  const handleEjecutarAlgoritmo = () => {
+    reset();
+
+    if (selectedAlgo === "BFS") {
+      setSimulationSteps(runBFS(graph, 'A'));
+      play();
+    } else if (selectedAlgo === "DFS") {
+      setSimulationSteps(runDFS(graph, 'A'));
+      play();
+    } else if (selectedAlgo === "Dijkstra") {
+      setSimulationSteps(runDijkstra(graph, 'A'));
+      play();
+    } else if (selectedAlgo === "Bellman-Ford") {
+      setSimulationSteps(runBellmanFord(graph, 'A'));
+      play();
+    } else if (selectedAlgo === "Prim") {
+      setSimulationSteps(runPrim(graph, 'A'));
+      play();
+    } else if (selectedAlgo === "Kruskal") {
+      // Kruskal no requiere nodo inicial
+      setSimulationSteps(runKruskal(graph));
+      play();
+    }
+  };
+
   const handleSelectCategory = (category) => {
     setActiveCategory(category);
     
@@ -83,17 +125,20 @@ function MainPage() {
         {/* Panel Centro: Lienzo de Grafo y Toolbar */}
         <section className="center-panel">
           <div className="canvas-wrapper">
-            <GraphCanvas />
+            {/* NUEVO: Enviamos el currentState al lienzo para que el hook de tu equipo pueda dibujarlo */}
+            <GraphCanvas currentState={currentFrame} />
           </div>
 
           <div className="toolbar-wrapper">
-            <BottomToolbar />
+            {/* NUEVO: Conectamos la acción al botón Ejecutar de la barra */}
+            <BottomToolbar onEjecutar={handleEjecutarAlgoritmo} />
           </div>
         </section>
 
         {/* Panel Derecho: Estado de Variables */}
         <aside className="right-panel">
-          <VariablePanel />
+          {/* NUEVO: Enviamos el frame actual al panel lateral para actualizar los textos en vivo */}
+          <VariablePanel frame={currentFrame} />
         </aside>
 
       </main>

@@ -1,53 +1,97 @@
 import { useEffect, useRef } from 'react';
-import { Graph } from "../model/obj/Graph"
+import { Graph } from "../model/obj/Graph";
+import { Node } from "../model/obj/Node";
 
-/**
- * Aca se instancia el grafo principal
- * Para hacer pruebas inicialice el grafo con los booleanos correspondientes
- * Puede agregar aristas usando los metodos de la funcion
- */
-const graph = new Graph();
-//graph.addEdge();
+// Instancia del grafo principal
+export const graph = new Graph();
 
-/**
- * Custom Hook que ejecuta el bucle de renderizado continuo en un Canvas 2D.
- *
- * @param {React.RefObject<HTMLCanvasElement>} canvasRef - Referencia al elemento <canvas>
- * @param {Graph} graph - Instancia del modelo del grafo
- * @param {Object|null} currentState - Paso actual de la simulación del algoritmo
- */
+// --- DATOS DE PRUEBA PARA EL BFS ---
+const nodoA = new Node('A', 'A', 150, 150);
+const nodoB = new Node('B', 'B', 300, 100);
+const nodoC = new Node('C', 'C', 300, 200);
+
+graph.addNode(nodoA);
+graph.addNode(nodoB);
+graph.addNode(nodoC);
+
+graph.addEdge(nodoA, nodoB, 1);
+graph.addEdge(nodoA, nodoC, 1);
+// -----------------------------------
 
 export function useCanvasRenderer(canvasRef, currentState) {
-  // Guarda el ID numérico devuelto por requestAnimationFrame para poder cancelarlo después
   const requestRef = useRef();
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     
-    // Obtención del contexto de renderizado 2D
     const ctx = canvas.getContext('2d');
 
-    /**
-     * Función recursiva que se ejecuta en cada frame del navegador (~60/120 FPS).
-     */
     const render = () => {
-      // 1. LIMPIEZA: Borra los dibujados del fotograma anterior
+      // --- LA SOLUCIÓN AL TAMAÑO ---
+      // Calculamos el tamaño real del panel en la pantalla y se lo asignamos a la resolución interna
+      const rect = canvas.getBoundingClientRect();
+      if (canvas.width !== rect.width || canvas.height !== rect.height) {
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+      }
+      // -----------------------------
+
+      // 1. Limpiamos el lienzo en cada fotograma usando el tamaño real
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // 2. AQUÍ SE DIBUJAN LOS ELEMENTOS (Nodos, Aristas, Etiquetas)
-      // Ej: graph.getEdges().forEach(edge => edge.draw(ctx, currentState));
-      // Ej: graph.getNodes().forEach(node => node.draw(ctx, currentState));
+      const allNodes = graph.getAllNodes();
 
-      // 3. BUCLE CONTINUO: Solicita al navegador el próximo fotograma
+      // 2. Sincronizamos los colores lógicos con la simulación
+      if (currentState) {
+        allNodes.forEach(node => {
+          if (node.id === currentState.currentNode) {
+            node.setColor("#0ea5e9"); // Turquesa: Nodo evaluándose actual
+          } else if (currentState.visitedNodes.includes(node.id)) {
+            node.setColor("#10b981"); // Verde: Nodo ya visitado
+          } else {
+            node.setColor("#1e293b"); // Color base oscuro
+          }
+        });
+      } else {
+        // Si la simulación no ha iniciado o se reinicia
+        allNodes.forEach(node => node.setColor("#1e293b"));
+      }
+
+      // 3. Dibujar Aristas (líneas)
+      const allEdges = graph.getAllEdges();
+      allEdges.forEach(edge => {
+        ctx.beginPath();
+        ctx.moveTo(edge.from.x, edge.from.y);
+        ctx.lineTo(edge.to.x, edge.to.y);
+        ctx.strokeStyle = "#475569"; 
+        ctx.lineWidth = 3;
+        ctx.stroke();
+      });
+
+      // 4. Dibujar Nodos (círculos)
+      allNodes.forEach(node => {
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, 25, 0, 2 * Math.PI); 
+        ctx.fillStyle = node.state.color;
+        ctx.fill();
+        ctx.strokeStyle = "#cbd5e1"; 
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // 5. Dibujar el nombre del nodo en el centro
+        ctx.fillStyle = "white";
+        ctx.font = "bold 16px sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(node.value, node.x, node.y);
+      });
+
       requestRef.current = requestAnimationFrame(render);
     };
 
-    // Inicia el primer ciclo del bucle
     requestRef.current = requestAnimationFrame(render);
-
-    // LIMPIEZA (Unmount / React Cleanup):
-    // Cancela la animación si el componente se desmonta o cambian las dependencias
     return () => cancelAnimationFrame(requestRef.current);
-  }, [canvasRef, graph, currentState]);
+    
+  }, [canvasRef, currentState]); 
 }
