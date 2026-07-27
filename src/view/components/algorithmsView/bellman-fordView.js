@@ -1,7 +1,7 @@
 export function code_bellman(){
     const bellman_ford_rust = [
-        { hover: true,  content: "fn bellman_ford(grafo: &Grafo, inicio: usize) -> Option<Vec<i32>> {" },
-        { hover: false, content: "    let num_nodos = grafo.num_nodos();" },
+        { hover: false,  content: "fn bellman_ford(grafo: &Grafo, inicio: usize) -> Option<Vec<i32>> {" },
+        { hover: true, content: "    let num_nodos = grafo.num_nodos();" },
         { hover: false, content: "    let mut distancias = vec![i32::MAX; num_nodos];" },
         { hover: false, content: "    distancias[inicio] = 0;" },
         { hover: false, content: "" },

@@ -13,7 +13,7 @@ import { code_dfs } from "../components/algorithmsView/dfsView";
 import { code_prim } from "../components/algorithmsView/primView"; 
 import { code_kruskal } from "../components/algorithmsView/kruskalView"; 
 import { code_bellman } from "../components/algorithmsView/bellman-fordView"; 
-import { code_dijkstra } from "../components/algorithmsView/dijkstraView"; 
+import { code_dijkstra } from "../components/algorithmsView/dijkstraView";
 
 import "../styles/MainPage.css";
 

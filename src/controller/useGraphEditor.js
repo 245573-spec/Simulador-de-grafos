@@ -1,4 +1,13 @@
 import { useEffect, useRef } from 'react';
+import { Graph } from "../model/obj/Graph"
+
+/**
+ * Aca se instancia el grafo principal
+ * Para hacer pruebas inicialice el grafo con los booleanos correspondientes
+ * Puede agregar aristas usando los metodos de la funcion
+ */
+const graph = new Graph();
+//graph.addEdge();
 
 /**
  * Custom Hook que ejecuta el bucle de renderizado continuo en un Canvas 2D.
@@ -7,7 +16,8 @@ import { useEffect, useRef } from 'react';
  * @param {Graph} graph - Instancia del modelo del grafo
  * @param {Object|null} currentState - Paso actual de la simulación del algoritmo
  */
-export function useCanvasRenderer(canvasRef, graph, currentState) {
+
+export function useCanvasRenderer(canvasRef, currentState) {
   // Guarda el ID numérico devuelto por requestAnimationFrame para poder cancelarlo después
   const requestRef = useRef();
 

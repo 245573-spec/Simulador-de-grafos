@@ -1,8 +1,11 @@
 import React, { useEffect, useRef } from "react";
+import { useCanvasRenderer } from "../../controller/useGraphEditor"
 import "../styles/GraphCanvas.css";
 
 function GraphCanvas() {
   const canvasRef = useRef(null);
+
+  useCanvasRenderer();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -10,20 +13,14 @@ function GraphCanvas() {
 
     const resizeCanvas = () => {
       const parent = canvas.parentElement;
-      if (parent) {
+      if (parent) { return; }
         // Soporte para pantallas de alta densidad (Retina)
-        const dpr = window.devicePixelRatio || 1;
-        const rect = parent.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      const rect = parent.getBoundingClientRect();
 
-        canvas.width = rect.width * dpr;
-        canvas.height = rect.height * dpr;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
 
-        const ctx = canvas.getContext("2d");
-        if (ctx) {
-          ctx.scale(dpr, dpr);
-          // Aquí invocarás tu renderizador del grafo
-        }
-      }
     };
 
     resizeCanvas();

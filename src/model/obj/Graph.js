@@ -1,6 +1,6 @@
 //Implementacion del grafo
 
-class Graph{
+export class Graph{
     /**
    * Crea una instancia de un Grafo.
    * @param {boolean} [_directed=false] - Define si el grafo es dirigido.
