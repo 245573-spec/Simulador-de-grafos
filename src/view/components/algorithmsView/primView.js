@@ -1,24 +1,22 @@
-export function code_prim(){
-    const text_default_prim_rust = [
-        { hover: true,  content: "fn prim(grafo: &Grafo, inicio: usize) -> Vec<Arista> {" },
-        { hover: false, content: "    let mut visitados = vec![false; grafo.num_nodos()];" },
-        { hover: false, content: "    let mut heap = BinaryHeap::new();" },
-        { hover: false, content: "    let mut mst = Vec::new();" },
-        { hover: false, content: "" },
-        { hover: false, content: "    visitados[inicio] = true;" },
-        { hover: false, content: "    // Agregar aristas del nodo inicial a la min-heap..." },
-        { hover: false, content: "" },
-        { hover: false, content: "    while let Some(Arista { origen, destino, peso }) = heap.pop() {" },
-        { hover: false, content: "        if visitados[destino] { continue; }" },
-        { hover: false, content: "" },
-        { hover: false, content: "        visitados[destino] = true;" },
-        { hover: false, content: "        mst.push(Arista { origen, destino, peso });" },
-        { hover: false, content: "        // Agregar nuevas aristas del destino al heap..." },
-        { hover: false, content: "    }" },
-        { hover: false, content: "" },
-        { hover: false, content: "    mst" },
-        { hover: false, content: "}" },
-    ];
-    return text_default_prim_rust;
+export function code_prim() {
+  const prim = [
+    { hover: false, content: "fn prim(grafo: &Grafo, nodo_inicio: usize) {" },
+    { hover: false, content: "    let mut visitados = HashSet::new();" },
+    { hover: false, content: "    let mut cola_prioridad = BinaryHeap::new();" },
+    { hover: false, content: "" },
+    { hover: false, content: "    visitados.insert(nodo_inicio);" },
+    { hover: false, content: "    cola_prioridad.agregar_aristas_de(nodo_inicio);" },
+    { hover: false, content: "" },
+    { hover: false, content: "    while let Some(arista) = cola_prioridad.pop_min() {" },
+    { hover: false, content: "        if visitados.insert(arista.destino) {" },
+    { hover: false, content: "            for nueva_arista in grafo.obtener_aristas(arista.destino) {" },
+    { hover: false, content: "                if !visitados.contains(&nueva_arista.destino) {" },
+    { hover: false, content: "                    cola_prioridad.push(nueva_arista);" },
+    { hover: false, content: "                }" },
+    { hover: false, content: "            }" },
+    { hover: false, content: "        }" },
+    { hover: false, content: "    }" },
+    { hover: false, content: "}" },
+  ];
+  return prim;
 }
-

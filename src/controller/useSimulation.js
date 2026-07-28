@@ -4,26 +4,27 @@ export function useSimulation(algorithmSteps, speedMs = 1000) {
     const [currentStepIndex, setCurrentStepIndex] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
     
-    const isFinished = algorithmSteps.length > 0 && !isPlaying && currentStepIndex >= algorithmSteps.length - 1;
-
-    // Estado actual que se dibujará en la pantalla
-    const currentFrame = isFinished ? null : algorithmSteps[currentStepIndex] || null;
+    const currentFrame = algorithmSteps[currentStepIndex] ?? null;
+    const isFinished = currentStepIndex >= algorithmSteps.length - 1;
 
     useEffect(() => {
         let timer;
         // Si está en "Play" y aún hay pasos, avanzamos
-        if (isPlaying && currentStepIndex < algorithmSteps.length - 1) {
-            timer = setInterval(() => {
+        if (isPlaying && !isFinished) {
+            timer = setTimeout(() => {
                 setCurrentStepIndex((prevIndex) => prevIndex + 1);
             }, speedMs);
-        } else if (currentStepIndex >= algorithmSteps.length - 1) {
+        } else if (isFinished) {
             setIsPlaying(false);
         }
 
         return () => clearInterval(timer);
-    }, [isPlaying, currentStepIndex, algorithmSteps, speedMs]);
+    }, [isPlaying, currentStepIndex, algorithmSteps.length, speedMs, isFinished]);
 
-    const play = () => setIsPlaying(true);
+    const play = () => {
+    if (isFinished) setCurrentStepIndex(0);
+    setIsPlaying(true);
+  };
     const pause = () => setIsPlaying(false);
     const reset = () => { 
         setIsPlaying(false); 

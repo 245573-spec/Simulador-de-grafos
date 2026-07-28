@@ -1,4 +1,13 @@
 /**
+ * Obtiene el valor hexadecimal/RGB procesado de una variable CSS global.
+ * @param {string} cssVar - Nombre de la variable (ej. '--accent').
+ * @returns {string} - Color procesado listo para el Canvas.
+ */
+function getCssColor(cssVar) {
+  return getComputedStyle(document.documentElement).getPropertyValue(cssVar).trim();
+}
+
+/**
  * Dibuja un nodo del grafo en el lienzo de HTML5 Canvas.
  * 
  * @function drawNode
@@ -17,37 +26,79 @@
  * @returns {void}
  */
 
-export function drawNode(_ctx, _x, _y, _value, _options = {}){
+export function drawNode(_ctx, _x, _y, _value, _options = {}) {
     const {
-        border_color = "#000",
-        bg_color = "#fff",
-        text_color = "#000",
-        radius = 12,
-        lineWidth = 3,
+        state = "unvisited",
+        pulse = 0,
         id = null
     } = _options;
+
+    const STYLES = {
+        active: {
+            bg_color: getCssColor('--bg'),
+            border_color: getCssColor('--accent-border'),
+            glow_color: "rgba(45, 212, 191, 0.6)",
+            text_color: getCssColor('--text'), 
+            base_radius: 28,
+            lineWidth: 2.8,
+            hasGlow: true
+        },
+        visited: {
+            bg_color: getCssColor('--accent'), 
+            border_color: getCssColor('--accent-border'),
+            glow_color: "transparent",
+            text_color: getCssColor('--bg'),
+            base_radius: 25,
+            lineWidth: 2,
+            hasGlow: false
+        },
+        unvisited: {
+            bg_color: getCssColor('--code-bg'),
+            border_color: getCssColor('--border'),
+            glow_color: "transparent",
+            text_color: getCssColor('--text'),
+            base_radius: 25,
+            lineWidth: 2,
+            hasGlow: false
+        }
+    };
+
+    const currentStyle = STYLES[state] || STYLES.unvisited;
+    const radius = currentStyle.hasGlow 
+        ? currentStyle.base_radius + pulse * 2 
+        : currentStyle.base_radius;
+
+    _ctx.save();
+
+    if (currentStyle.hasGlow) {
+        _ctx.shadowBlur = 18 + pulse * 10;
+        _ctx.shadowColor = currentStyle.glow_color;
+    }
 
     _ctx.save();
 
     _ctx.beginPath();
-    _ctx.arc(_x , _y, radius, 0, 2*Math.PI);
-    _ctx.fillStyle = bg_color;
+    _ctx.arc(_x, _y, radius, 0, 2 * Math.PI);
+    _ctx.fillStyle = currentStyle.bg_color;
     _ctx.fill();
-    _ctx.lineWidth = lineWidth;
-    _ctx.strokeStyle = border_color;
+    _ctx.lineWidth = currentStyle.lineWidth;
+    _ctx.strokeStyle = currentStyle.border_color;
     _ctx.stroke();
 
+    _ctx.shadowBlur = 0;
+    _ctx.shadowColor = "transparent";
 
-
-    _ctx.font = '12px sans-serif';
-    _ctx.fillStyle = text_color;;
-    _ctx.textAlign = 'center';
-    _ctx.textBaseline = 'middle';
+    const monoFont = getCssColor('--mono') || 'Consolas, monospace';
+    _ctx.font = `bold 15px ${monoFont}`;
+    _ctx.fillStyle = currentStyle.text_color;
+    _ctx.textAlign = "center";
+    _ctx.textBaseline = "middle";
     _ctx.fillText(_value.toString(), _x, _y);
 
-    if(id !== null){
-        _ctx.fillStyle = '#64748b';
-        _ctx.fillText(id.toString(), x, y - 8);
+    if (id !== null) {
+        _ctx.font = `11px ${monoFont}`;
+        _ctx.fillStyle = getCssColor('--text');
+        _ctx.fillText(id.toString(), _x, _y - (radius + 8));
     }
 
     _ctx.restore();

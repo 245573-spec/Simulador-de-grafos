@@ -80,7 +80,7 @@ export class Graph{
         this.adjacencyList.forEach((listEdge, nodeId) => {
             this.adjacencyList.set(
                 nodeId,
-                listEdge.filter((edge) => edge.to !== _node.id)
+                listEdge.filter((edge) => edge.to.id !== _node.id)
             );
         });
         return true;
@@ -101,10 +101,10 @@ export class Graph{
             return false;
         }
         
-        this.adjacencyList.set(_nodeOrigin.id, this.adjacencyList.get(_nodeOrigin).filter(edge => edge.to !== _nodeTarget.id));
+        this.adjacencyList.set(_nodeOrigin.id, this.adjacencyList.get(_nodeOrigin.id).filter(edge => edge.to !== _nodeTarget.id));
 
         if(!this.directed){
-            this.adjacencyList.set(_nodeTarget.id, this.adjacencyList.get(_nodeTarget).filter(edge => edge.to !== _nodeOrigin.id));
+            this.adjacencyList.set(_nodeTarget.id, this.adjacencyList.get(_nodeTarget.id).filter(edge => edge.to !== _nodeOrigin.id));
         }
         return true;
     }

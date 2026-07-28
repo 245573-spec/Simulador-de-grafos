@@ -3,11 +3,11 @@ import { useCanvasRenderer } from "../../controller/useGraphEditor";
 import "../styles/GraphCanvas.css";
 
 // Recibimos currentState desde MainPage
-function GraphCanvas({ currentState }) {
+function GraphCanvas({ currentState, graph }) {
   const canvasRef = useRef(null);
 
   // Le pasamos el ref y el estado actual al hook
-  useCanvasRenderer(canvasRef, currentState);
+  useCanvasRenderer(canvasRef, currentState, graph);
 
   return (
     <main className="graph-canvas-container">

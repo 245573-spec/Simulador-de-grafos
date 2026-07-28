@@ -8,7 +8,6 @@ import { runDijkstra } from "../../model/algorithms/dijkstra";
 import { runKruskal } from "../../model/algorithms/kruskal";
 import { runPrim } from "../../model/algorithms/prim";
 import { runBellmanFord } from "../../model/algorithms/bellman-ford";
-import { graph } from "../../controller/useGraphEditor";
 
 import Header from "../components/Header";
 import CategoryTabs from "../components/CategoryTabs";
@@ -32,7 +31,7 @@ import "../styles/MainPage.css";
  * --------
  * Vista principal que orquesta el layout de la aplicación y el estado global de algoritmos.
  */
-function MainPage() {
+function MainPage( {graph} ) {
 
   const algorithmsCategory = {
     "Recorridos": ["BFS", "DFS"],
@@ -55,11 +54,10 @@ function MainPage() {
     algorithmsCategory["Recorridos"][0]
   );
 
-  // NUEVO: Estado para guardar el historial de pasos calculados por el algoritmo
   const [simulationSteps, setSimulationSteps] = useState([]);
   
-  // NUEVO: Inicializamos el simulador pasándole los pasos y la velocidad en milisegundos (ej: 1000ms = 1s)
-  const { currentFrame, play, reset } = useSimulation(simulationSteps, 1000);
+
+  const { currentFrame, play, reset } = useSimulation(simulationSteps, 250);
   const activeLineIndex = currentFrame?.codeLine ?? null;
 
   // NUEVO: Función que conecta el botón "Ejecutar" con el algoritmo seleccionado
@@ -127,7 +125,7 @@ function MainPage() {
         <section className="center-panel">
           <div className="canvas-wrapper">
             {/* NUEVO: Enviamos el currentState al lienzo para que el hook de tu equipo pueda dibujarlo */}
-            <GraphCanvas currentState={currentFrame} />
+            <GraphCanvas currentState={currentFrame} graph={graph} />
           </div>
 
           <div className="toolbar-wrapper">
