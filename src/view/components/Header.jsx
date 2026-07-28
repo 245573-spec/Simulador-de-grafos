@@ -25,7 +25,7 @@ function Header() {
       {/* 2. Título Central */}
       <div className="header-title-section">
         <h1 className="header-title">
-          Simulador de <span className="title-accent">Grafos</span>
+         <span className="title-accent">Graph</span>ormática 
         </h1>
       </div>
 

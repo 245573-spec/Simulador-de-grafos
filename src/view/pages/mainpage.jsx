@@ -60,30 +60,23 @@ function MainPage( {graph} ) {
   const { currentFrame, play, reset } = useSimulation(simulationSteps, 500);
   const activeLineIndex = currentFrame?.codeLine ?? null;
 
-  // NUEVO: Función que conecta el botón "Ejecutar" con el algoritmo seleccionado
-  const handleEjecutarAlgoritmo = () => {
-    reset();
+  const ALGORITHM_RUNNERS = {
+    'BFS': (g) => runBFS(g, 'A'),
+    'DFS': (g) => runDFS(g, 'A'),
+    'Dijkstra': (g) => runDijkstra(g, 'A'),
+    'Bellman-Ford': (g) => runBellmanFord(g, 'A'),
+    'Prim': (g) => runPrim(g, 'A'),
+    'Kruskal': (g) => runKruskal(g),
+  };
 
-    if (selectedAlgo === "BFS") {
-      setSimulationSteps(runBFS(graph, 'A'));
-      play();
-    } else if (selectedAlgo === "DFS") {
-      setSimulationSteps(runDFS(graph, 'A'));
-      play();
-    } else if (selectedAlgo === "Dijkstra") {
-      setSimulationSteps(runDijkstra(graph, 'A'));
-      play();
-    } else if (selectedAlgo === "Bellman-Ford") {
-      setSimulationSteps(runBellmanFord(graph, 'A'));
-      play();
-    } else if (selectedAlgo === "Prim") {
-      setSimulationSteps(runPrim(graph, 'A'));
-      play();
-    } else if (selectedAlgo === "Kruskal") {
-      // Kruskal no requiere nodo inicial
-      setSimulationSteps(runKruskal(graph));
-      play();
-    }
+  const handleEjecutarAlgoritmo = () => {
+    const runner = ALGORITHM_RUNNERS[selectedAlgo];
+    
+    if (!runner) return; // Validación de seguridad
+
+    reset();
+    setSimulationSteps(runner(graph));
+    play();
   };
 
   const handleSelectCategory = (category) => {

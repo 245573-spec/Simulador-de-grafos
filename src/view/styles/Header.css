@@ -54,8 +54,8 @@
 }
 
 .header-title {
-  font-size: 35 px;
-  font-weight: 600;
+  font-size: 38px !important;
+  font-weight: 550;
   letter-spacing: -0.5px;
   color: var(--text-h);
   margin: 0;
