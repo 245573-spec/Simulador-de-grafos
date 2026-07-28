@@ -57,7 +57,7 @@ function MainPage( {graph} ) {
   const [simulationSteps, setSimulationSteps] = useState([]);
   
 
-  const { currentFrame, play, reset } = useSimulation(simulationSteps, 250);
+  const { currentFrame, play, reset } = useSimulation(simulationSteps, 500);
   const activeLineIndex = currentFrame?.codeLine ?? null;
 
   // NUEVO: Función que conecta el botón "Ejecutar" con el algoritmo seleccionado
