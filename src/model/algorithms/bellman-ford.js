@@ -2,6 +2,7 @@
 export function runBellmanFord(graph, startNodeId) {
     let steps = [];
     let distances = {};
+    let parents = {}; //Guardamos el camino optimo
     let nodes = graph.getAllNodes();
     let edges = graph.getAllEdges();
     let visited = new Set();
@@ -12,10 +13,19 @@ export function runBellmanFord(graph, startNodeId) {
     // Inicialización de distancias
     for (let node of nodes) {
         distances[node.id] = Infinity;
+        parents[node.id] = null;
     }
 
     // Helper para capturar el estado en cada línea de código
     const captureFrame = (codeLineIndex, currentNode = null, activeEdge = null) => {
+        //Al momento de agregar las aristas, solo queremos las que creen el camino optimo
+        let currentHighlightedEdges = [];
+        for (let nodeId in parents) {
+            if (parents[nodeId] !== null) {
+                currentHighlightedEdges.push(`${parents[nodeId]}-${nodeId}`);
+            }
+        }
+
         steps.push({
             codeLine: codeLineIndex,
             currentNode: currentNode,
@@ -27,7 +37,7 @@ export function runBellmanFord(graph, startNodeId) {
             ),
             distancesState: { ...distances },
             highlightedNodes: activeEdge ? [activeEdge.from, activeEdge.to] : Array.from(visited),
-            highlightedEdges: [...highlightedEdges]
+            highlightedEdges: [...currentHighlightedEdges]
         });
     };
 
@@ -79,6 +89,7 @@ export function runBellmanFord(graph, startNodeId) {
                     captureFrame(10, `${u}->${v}`, activeEdgeObj);
 
                     distances[v] = newDist;
+                    parents[v] = u;
                     visited.add(v);
 
                     if (!highlightedEdges.includes(edgeKey)) {

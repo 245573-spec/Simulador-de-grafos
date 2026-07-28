@@ -5,16 +5,24 @@ export function runDijkstra(graph, startNodeId) {
     let visited = new Set();
     let pq = []; // Cola de prioridad
     let highlightedEdges = [];
+    let parent = {};
 
     if (!graph.nodes.has(startNodeId)) return steps;
 
     // Inicializamos las distancias en Infinito para todos los nodos
     for (let node of graph.getAllNodes()) {
         distances[node.id] = Infinity;
+        parent[node.id] = null;
     }
 
-    // Helper para tomar la captura completa de cada estado
     const captureFrame = (codeLineIndex, currentNode = null, activeEdge = null) => {
+        let currentHighlightedEdges = [];
+        for (let nodeId in parent) {
+            if (parent[nodeId] !== null) {
+                currentHighlightedEdges.push(`${parent[nodeId]}-${nodeId}`);
+            }
+        }
+
         steps.push({
             codeLine: codeLineIndex,
             currentNode: currentNode,
@@ -25,7 +33,7 @@ export function runDijkstra(graph, startNodeId) {
             // Estado actual de la tabla de distancias para renderizar en UI
             distancesState: { ...distances },
             highlightedNodes: currentNode ? [currentNode, ...pq.map(item => item.id)] : pq.map(item => item.id),
-            highlightedEdges: [...highlightedEdges]
+            highlightedEdges: [...currentHighlightedEdges]
         });
     };
 
@@ -101,6 +109,7 @@ export function runDijkstra(graph, startNodeId) {
                 if (!highlightedEdges.includes(edgeKey)) {
                     highlightedEdges.push(edgeKey);
                 }
+                parent[neighborId] = currentId;
 
                 // [14] cola_prioridad.push(NodoPrioridad { id: arista.destino, dist: nueva_dist });
                 captureFrame(14, currentId, { from: currentId, to: neighborId });
