@@ -4,8 +4,10 @@ export function useSimulation(algorithmSteps, speedMs = 1000) {
     const [currentStepIndex, setCurrentStepIndex] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
     
+    const isFinished = algorithmSteps.length > 0 && !isPlaying && currentStepIndex >= algorithmSteps.length - 1;
+
     // Estado actual que se dibujará en la pantalla
-    const currentFrame = algorithmSteps[currentStepIndex] || null;
+    const currentFrame = isFinished ? null : algorithmSteps[currentStepIndex] || null;
 
     useEffect(() => {
         let timer;

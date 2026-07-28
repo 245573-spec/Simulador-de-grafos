@@ -13,7 +13,10 @@ export function runBFS(graph, startNodeId) {
         steps.push({
             currentNode: currentId,
             visitedNodes: Array.from(visited),
-            queueState: [...queue]
+            queueState: [...queue],
+            highlightedNodes: [currentId, ...queue],
+            animationMode: "bfs",
+            codeLine: steps.length
         });
 
         // Obtenemos los vecinos de la lista de adyacencia

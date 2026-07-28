@@ -16,7 +16,10 @@ export function runDFS(graph, startNodeId) {
             steps.push({
                 currentNode: currentId,
                 visitedNodes: Array.from(visited),
-                queueState: [...stack] // React lo mostrará en tu panel como "Cola / Pila"
+                queueState: [...stack], // React lo mostrará en tu panel como "Cola / Pila"
+                highlightedNodes: [currentId, ...stack],
+                animationMode: "dfs",
+                codeLine: steps.length
             });
 
             let edges = graph.adjacencyList.get(currentId) || [];

@@ -33,7 +33,11 @@ export function runKruskal(graph) {
         steps.push({
             currentNode: `${u}-${v}`, // Mostramos la arista evaluada
             visitedNodes: Array.from(mstNodes),
-            queueState: [...queueState]
+            queueState: [...queueState],
+            highlightedNodes: [u, v],
+            highlightedEdges: [`${u}-${v}`],
+            animationMode: "kruskal",
+            codeLine: steps.length
         });
 
         queueState.shift(); // Removemos la arista de la cola visual

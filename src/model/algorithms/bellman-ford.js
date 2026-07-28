@@ -21,7 +21,11 @@ export function runBellmanFord(graph, startNodeId) {
                 currentNode: `${u}->${v}`,
                 visitedNodes: Array.from(visited),
                 // Mostramos las distancias calculadas en la variable
-                queueState: Object.entries(distances).map(([n, d]) => `${n}:${d === Infinity ? '∞' : d}`)
+                queueState: Object.entries(distances).map(([n, d]) => `${n}:${d === Infinity ? '∞' : d}`),
+                highlightedNodes: [u, v],
+                highlightedEdges: [`${u}->${v}`],
+                animationMode: "bellman",
+                codeLine: steps.length
             });
 
             if (distances[u] !== Infinity && distances[u] + weight < distances[v]) {

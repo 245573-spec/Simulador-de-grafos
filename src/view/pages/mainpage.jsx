@@ -60,6 +60,7 @@ function MainPage() {
   
   // NUEVO: Inicializamos el simulador pasándole los pasos y la velocidad en milisegundos (ej: 1000ms = 1s)
   const { currentFrame, play, reset } = useSimulation(simulationSteps, 1000);
+  const activeLineIndex = currentFrame?.codeLine ?? null;
 
   // NUEVO: Función que conecta el botón "Ejecutar" con el algoritmo seleccionado
   const handleEjecutarAlgoritmo = () => {
@@ -118,7 +119,7 @@ function MainPage() {
             />
           </div>
           <div className="code-viewer-wrapper-slot">
-            <CodeViewer code={codes[selectedAlgo]} />
+            <CodeViewer code={codes[selectedAlgo]} activeLineIndex={activeLineIndex} />
           </div>
         </aside>
 

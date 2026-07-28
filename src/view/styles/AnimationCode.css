@@ -27,8 +27,9 @@
   padding: 2px 8px;
   border-radius: 8px;
   border: 1px solid transparent;
-  transition: all 0.15s ease-in-out;
+  transition: all 0.2s ease-in-out;
   min-width: max-content;
+  scroll-margin: 56px;
 }
 
 /* 🟢 LA PÍLDORA DESTACADA (Línea Activa/Hover de la imagen) */
@@ -36,6 +37,18 @@
   background-color: rgba(45, 212, 191, 0.12); /* Fondo sutil turquesa */
   border: 1px solid rgba(45, 212, 191, 0.5);   /* Borde verde turquesa completo */
   box-shadow: 0 0 10px rgba(45, 212, 191, 0.15);
+  animation: codePulse 1.25s ease-in-out infinite;
+}
+
+@keyframes codePulse {
+  0%, 100% {
+    transform: translateX(0);
+    box-shadow: 0 0 10px rgba(45, 212, 191, 0.15);
+  }
+  50% {
+    transform: translateX(2px);
+    box-shadow: 0 0 16px rgba(45, 212, 191, 0.28);
+  }
 }
 
 /* Números de Línea */

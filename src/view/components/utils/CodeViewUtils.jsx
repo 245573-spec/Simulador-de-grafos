@@ -1,13 +1,24 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import "../../styles/AnimationCode.css";
 
 export function AnimationCode({ lines }) {
+  const containerRef = useRef(null);
+  const activeLineRef = useRef(null);
+
+  useEffect(() => {
+    const activeIndex = lines.findIndex((line) => line.hover || line.active);
+    if (activeIndex < 0 || !containerRef.current || !activeLineRef.current) return;
+
+    const activeElement = activeLineRef.current;
+    activeElement.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, [lines]);
+
   if (!lines || lines.length === 0) return null;
 
   return (
-    <div className="code-viewer-container">
+    <div className="code-viewer-container" ref={containerRef}>
       <div className="code-lines-wrapper">
         {lines.map((line, index) => {
           const isActive = line.hover || line.active;
@@ -15,6 +26,7 @@ export function AnimationCode({ lines }) {
           return (
             <div
               key={index}
+              ref={isActive ? activeLineRef : null}
               className={`code-line-row ${isActive ? "active-pill" : ""}`}
             >
               {/* Número de línea */}

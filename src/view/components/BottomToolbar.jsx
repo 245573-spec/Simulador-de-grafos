@@ -12,7 +12,7 @@ import {
  * -------------
  * Barra de herramientas ubicada en la parte inferior del lienzo.
  */
-function BottomToolbar() {
+function BottomToolbar({ onEjecutar }) {
   return (
     <footer className="toolbar-footer">
       <div className="toolbar-container">
@@ -39,7 +39,7 @@ function BottomToolbar() {
           <span>Eliminar</span>
         </button>
 
-        <button type="button" className="btn-execute">
+        <button type="button" className="btn-execute" onClick={onEjecutar}>
           <LuPlay className="btn-icon icon-fill" />
           <span>Ejecutar</span>
         </button>

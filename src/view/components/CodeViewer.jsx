@@ -1,9 +1,6 @@
 import "../styles/CodeViewer.css";
 
-import { useState } from "react";
 import { AnimationCode } from "./utils/CodeViewUtils";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { LuCopy, LuCheck, LuCode } from "react-icons/lu";
 
 const text_default = [
   { hover: false, content: "// Selecciona un algoritmo para ver el pseudocódigo" },
@@ -17,7 +14,14 @@ const text_default = [
  * ----------
  * Visualizador de pseudocódigo con resaltado de líneas.
  */
-function CodeViewer({ code = text_default }) {
+function CodeViewer({ code = text_default, activeLineIndex = null }) {
+  const linesToRender = Array.isArray(code)
+    ? code.map((line, index) => ({
+        ...line,
+        active: activeLineIndex !== null && index === activeLineIndex,
+      }))
+    : text_default;
+
   return (
     <div className="code-viewer-wrapper">
       {/* HEADER */}
@@ -28,7 +32,7 @@ function CodeViewer({ code = text_default }) {
       {/* ÁREA DE CÓDIGO CON SCROLL */}
       <div className="code-viewer-container">
         <div tabIndex={0} className="code-viewer-scroll">
-          <AnimationCode lines={code} />
+          <AnimationCode lines={linesToRender} />
         </div>
       </div>
     </div>

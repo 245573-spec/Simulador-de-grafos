@@ -15,7 +15,11 @@ export function runPrim(graph, startNodeId) {
         steps.push({
             currentNode: edge.to.id,
             visitedNodes: Array.from(visited),
-            queueState: pq.map(e => `${e.to.id}(w:${e.weight})`)
+            queueState: pq.map(e => `${e.to.id}(w:${e.weight})`),
+            highlightedNodes: [edge.to.id, ...Array.from(visited)],
+            highlightedEdges: [`${edge.from.id}-${edge.to.id}`],
+            animationMode: "prim",
+            codeLine: steps.length
         });
 
         if (!visited.has(edge.to.id)) {

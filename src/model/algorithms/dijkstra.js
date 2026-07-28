@@ -25,7 +25,10 @@ export function runDijkstra(graph, startNodeId) {
         steps.push({
             currentNode: currentId,
             visitedNodes: Array.from(visited),
-            queueState: pq.map(item => `${item.id}(${item.dist})`)
+            queueState: pq.map(item => `${item.id}(${item.dist})`),
+            highlightedNodes: [currentId, ...pq.map(item => item.id)],
+            animationMode: "dijkstra",
+            codeLine: steps.length
         });
 
         let edges = graph.adjacencyList.get(currentId) || [];
