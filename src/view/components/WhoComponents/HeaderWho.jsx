@@ -1,44 +1,39 @@
 import { useNavigate } from "react-router-dom";
-import "../styles/Header.css";
 
-/*
- * HeaderWho
- * ---------
- * Encabezado para la página "¿Quiénes Somos?".
- * Al hacer clic en el título Graphormática
- * se regresa a la página principal.
- */
+
+import "../../styles/WhoStyles/HeaderWho.css"
+
 function HeaderWho() {
 
     const navigate = useNavigate();
 
     return (
-        <header className="header-container">
+        <header className="who-header-container">
 
-            {/* Logo */}
-            <div className="header-logo-section">
-                <div className="logo-wrapper">
-                    <img
-                        src="/Simulador-de-grafos/graph.png"
-                        alt="Logo del simulador"
-                        className="logo-img"
-                    />
-                </div>
-            </div>
+    <div className="who-header-logo-section">
 
-            {/* Título */}
-            <div className="header-title-section">
+        <div className="who-logo-wrapper">
+            <img
+            src="/Simulador-de-grafos/graph.png"
+            alt="Logo del simulador"
+            className="logo-img"
+          />
+        </div>
 
-                <h1
-                    className="header-title clickable-title"
-                    onClick={() => navigate("/")}
-                >
-                    <span className="title-accent">Graph</span>ormática
-                </h1>
+    </div>
 
-            </div>
+    <div
+        className="who-header-title-section"
+        onClick={() => navigate("/")}
+    >
+        <h1 className="who-header-title">
+            <span className="who-title-accent">Graph</span>ormática
+        </h1>
+    </div>
 
-        </header>
+    <div></div>
+
+</header>
     );
 }
 

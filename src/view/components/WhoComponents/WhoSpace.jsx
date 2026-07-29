@@ -2,22 +2,30 @@ import IntegrantesSection from "./IntegrantesSection";
 import TrayectoriaSection from "./TrayectoriaSection";
 import AgradecimientosSection from "./AgradecimientosSection";
 
+import "../../styles/WhoStyles/WhoSpace.css";
+
 function WhoSpace({ activeTab }) {
 
-    switch (activeTab) {
+    return (
 
-        case "Integrantes":
-            return <IntegrantesSection />;
+        <main className="who-space">
 
-        case "Trayectoria":
-            return <TrayectoriaSection />;
+            {activeTab === "Integrantes" && (
+                <IntegrantesSection />
+            )}
 
-        case "Agradecimientos":
-            return <AgradecimientosSection />;
+            {activeTab === "Trayectoria" && (
+                <TrayectoriaSection />
+            )}
 
-        default:
-            return null;
-    }
+            {activeTab === "Agradecimientos" && (
+                <AgradecimientosSection />
+            )}
+
+        </main>
+
+    );
+
 }
 
 export default WhoSpace;

@@ -30,7 +30,7 @@ function AgradecimientosSection() {
             description: "Agradecemos su apoyo y orientación durante el desarrollo del proyecto Graphormática."
         },
         {
-            id: 2,
+            id: 4,
             image: metaia,
             name: "MetaIA",
             role: "Instructor",

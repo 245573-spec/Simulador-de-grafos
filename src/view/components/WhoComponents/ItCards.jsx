@@ -1,33 +1,41 @@
+import "../../styles/WhoStyles/ItCard.css";
 function ItCard({
     image,
     name,
     role,
     description
 }) {
+
     return (
+
         <article className="it-card">
 
-            <div className="it-card-image">
-
-                <img
-                    src={image}
-                    alt={name}
-                />
-
-            </div>
+            <img
+                src={image}
+                alt={name}
+                className="it-card-image"
+            />
 
             <div className="it-card-content">
 
-                <h3>{name}</h3>
+                <h3 className="it-card-name">
+                    {name}
+                </h3>
 
-                <span>{role}</span>
+                <span className="it-card-role">
+                    {role}
+                </span>
 
-                <p>{description}</p>
+                <p className="it-card-description">
+                    {description}
+                </p>
 
             </div>
 
         </article>
+
     );
+
 }
 
 export default ItCard;

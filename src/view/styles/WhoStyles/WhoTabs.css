@@ -1,61 +1,116 @@
-/* Contenedor principal de las pestañas */
-.category-tabs-container {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 48px;
-  background-color: var(--code-bg); /* #070a10 o fondo oscuro integrado */
-  border-bottom: 1px solid var(--border);
-  padding: 16px 20px 4px 20px;
+/* ===========================================
+   WHO TABS
+   =========================================== */
+
+.who-tabs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 48px;
+
+    width: 100%;
+
+    padding: 16px 20px 4px;
+
+    background-color: var(--code-bg);
+    border-bottom: 1px solid var(--border);
+
+    flex-shrink: 0;
 }
 
-/* Botones de pestaña */
-.tab-button {
-  position: relative;
-  background: transparent;
-  border: none;
-  padding: 10px 4px 14px 4px;
-  font-size: 15px;
-  font-weight: 550;
-  color: var(--text);
-  cursor: pointer;
-  transition: color 0.2s ease-in-out;
+/* ===========================================
+   BOTONES
+   =========================================== */
+
+.who-tabs .tab-button {
+    position: relative;
+
+    background: transparent;
+    border: none;
+
+    padding: 10px 4px 14px;
+
+    font-size: 15px;
+    font-weight: 550;
+
+    color: var(--text);
+
+    cursor: pointer;
+
+    transition:
+        color .25s ease,
+        transform .2s ease;
 }
 
-.tab-button:hover {
-  color: var(--text-h);
+.who-tabs .tab-button:hover {
+    color: var(--text-h);
+    transform: translateY(-2px);
 }
 
-/* Estado Activo */
-.tab-button.active {
-  color: var(--accent);
-  font-weight: 590;
+/* ===========================================
+   ACTIVO
+   =========================================== */
+
+.who-tabs .tab-button.active {
+    color: var(--accent);
 }
 
-/* Indicador de pestaña activa (Línea inferior con brillo neón) */
-.tab-indicator {
-  content: '';
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  right: 0;
-  width: 100%;
-  height: 3px;
-  background-color: var(--accent);
-  border-radius: 9999px;
-  box-shadow: 0 -2px 8px rgba(45, 212, 191, 0.4);;
+/* Línea inferior */
+
+.who-tabs .tab-button.active::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: -1px;
+
+    height: 3px;
+
+    border-radius: 999px;
+
+    background: var(--accent);
+
+    box-shadow:
+        0 -2px 10px rgba(45,212,191,.45);
+
 }
 
-/* Adaptabilidad para pantallas más pequeñas */
-@media (max-width: 640px) {
-  .category-tabs-container {
-    gap: 12px;
-    padding: 6px 12px;
-  }
+/* ===========================================
+   RESPONSIVE
+   =========================================== */
 
-  .tab-button {
-    font-size: 12px;
-    padding: 6px 2px 10px;
-  }
+@media (max-width: 768px) {
+
+    .who-tabs {
+        gap: 28px;
+        padding: 14px 16px 4px;
+    }
+
+    .who-tabs .tab-button {
+        font-size: 14px;
+    }
+
+}
+
+@media (max-width: 520px) {
+
+    .who-tabs {
+
+        gap: 12px;
+
+        justify-content: space-evenly;
+
+        padding: 12px;
+    }
+
+    .who-tabs .tab-button {
+
+        font-size: 13px;
+
+        padding: 8px 2px 12px;
+    }
+
 }

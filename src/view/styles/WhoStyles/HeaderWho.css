@@ -1,0 +1,145 @@
+/* ===========================================
+   HEADER WHO
+   =========================================== */
+
+.who-header-container {
+    display: grid;
+    grid-template-columns: 80px 1fr 80px;
+
+    align-items: center;
+
+    width: 100%;
+    height: 70px;
+
+    padding: 0 24px;
+    box-sizing: border-box;
+
+    background-color: var(--code-bg);
+    border-bottom: 1px solid var(--border);
+}
+/* ===========================================
+   LOGO
+   =========================================== */
+
+.who-header-logo-section {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.who-logo-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 64px;
+    height: 64px;
+
+    border-radius: 12px;
+    border: 1px solid var(--border);
+
+    background-color: var(--code-bg);
+
+    overflow: hidden;
+    padding: 4px;
+    box-sizing: border-box;
+}
+
+
+.who-logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+/* ===========================================
+   TÍTULO
+   =========================================== */
+
+.who-header-title-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+}
+.who-header-title {
+    margin: 0;
+
+    font-size: 38px;
+    font-weight: 550;
+    letter-spacing: -0.5px;
+
+    color: var(--text-h);
+
+    transition: color .25s ease;
+}
+
+.who-title-accent {
+    color: var(--accent);
+    transition: color .25s ease;
+}
+
+/* ===========================================
+   HOVER
+   =========================================== */
+
+.who-header-title-section:hover .who-header-title {
+    color: var(--accent);
+}
+
+.who-header-title-section:hover .who-title-accent {
+    color: var(--text-h);
+}
+
+.who-logo-wrapper:hover {
+    border-color: var(--accent-border);
+
+    box-shadow:
+        0 0 14px rgba(45, 212, 191, .15);
+
+    transition: all .25s ease;
+}
+
+/* ===========================================
+   RESPONSIVE
+   =========================================== */
+
+@media (max-width: 768px) {
+
+    .who-header-container {
+        padding: 0 16px;
+    }
+
+    .who-logo-wrapper {
+        width: 52px;
+        height: 52px;
+    }
+
+    .who-header-title {
+        font-size: 30px;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .who-header-container {
+        height: 64px;
+    }
+
+    .who-header-logo-section {
+        gap: 14px;
+    }
+
+    .who-logo-wrapper {
+        width: 46px;
+        height: 46px;
+    }
+
+    .who-header-title {
+        font-size: 24px;
+    }
+
+}
