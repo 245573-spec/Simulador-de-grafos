@@ -24,7 +24,7 @@ function IntegrantesSection() {
             image: max,
             name: "Max S. Holguino Nuñez",
             role: "Intento de Project Manager",
-            description: "Encargado de la supervisión del proyecto(Desarrollador Full-Stack)."
+            description: "Encargado de la supervisión del proyecto (Desarrollador Full-Stack)."
         },
         {
             id: 3,
@@ -36,7 +36,7 @@ function IntegrantesSection() {
         {
             id: 4,
             image: carlos,
-            name: "Carlos Quispe Crispín",
+            name: "Carlos D. Quispe Crispín",
             role: "Intento de Desarrollador Back-End",
             description:"Encargado del mapeo de algoritmos"
         }
