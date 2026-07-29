@@ -1,13 +1,17 @@
-import logo from "../../assets/AlpacAPP General.png";
 import { IoSettingsSharp } from "react-icons/io5";
+import { SlQuestion , SlBubble, SlControlForward} from "react-icons/sl";
+import { CgArrowLongRight, CgAlignBottom } from "react-icons/cg";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/Header.css";
-
 /*
  * Header
  * -------
  * Muestra el encabezado principal de la aplicación.
  */
 function Header() {
+  const [showSupportMenu, setShowSupportMenu] = useState(false);
+  const navigate = useNavigate();
   return (
     <header className="header-container">
       
@@ -15,7 +19,7 @@ function Header() {
       <div className="header-logo-section">
         <div className="logo-wrapper">
           <img
-            src={logo}
+            src="/Simulador-de-grafos/graph.png"
             alt="Logo del simulador"
             className="logo-img"
           />
@@ -31,12 +35,48 @@ function Header() {
 
       {/* 3. Botón de Soporte/Ajustes */}
       <div className="header-actions-section">
-        <button type="button" className="btn-support">
-          <IoSettingsSharp className="btn-support-icon" />
-          <span>Soporte</span>
-        </button>
-      </div>
 
+    <button
+        type="button"
+        className="btn-support"
+        onClick={() => setShowSupportMenu(prev => !prev)}
+    >
+        <IoSettingsSharp className="btn-support-icon" />
+        <span>Soporte</span>
+    </button>
+
+    {showSupportMenu && (
+        <div className="support-menu">
+
+            <button>
+              <CgAlignBottom />
+              Ponderado
+            </button>
+
+            <button>
+              <CgArrowLongRight />
+              Dirigido
+            </button>
+
+            <button>
+              <SlControlForward />
+              Velocidad
+            </button>
+
+            <button>
+              <SlBubble />
+              Subtitulado
+            </button>
+            
+            <button onClick={() => navigate("/quienes-somos")}>
+              <SlQuestion />
+              ¿Quiénes Somos?
+            </button>
+
+        </div>
+    )}
+
+</div>
     </header>
   );
 }
