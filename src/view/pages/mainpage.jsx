@@ -25,6 +25,7 @@ function MainPage({ graph }) {
     selectedAlgo,
     currentFrame,
     activeLineIndex,
+    itsPlaying,
     currentCode,
     auxLabel,
     availableAlgorithms,
@@ -43,6 +44,7 @@ function MainPage({ graph }) {
     handleSelectCategory,
     handleEjecutarAlgoritmo,
     handlePause,
+    handleResume,
     handleReset,
     closeErrorModal,
     toggleDirected,
@@ -101,6 +103,8 @@ function MainPage({ graph }) {
             <BottomToolbar 
               onPausar={handlePause}
               onReset={handleReset}
+              onResume={handleResume}
+              isPlaying={itsPlaying}
               onEjecutar={handleEjecutarAlgoritmo} 
               onOpenGraphView={() => setIsGraphViewOpen(true)}
               onOpenAdd = {() => setIsAddOpen(true)}

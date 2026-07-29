@@ -58,7 +58,7 @@ export function useMainPageController(graph) {
         message: ""
     });
 
-    const { currentFrame, pause,play, reset } = useSimulation(simulationSteps, velocity);
+    const { currentFrame, isPlaying, pause, play, resume, reset } = useSimulation(simulationSteps, velocity);
 
     const showError = (title, message) => {
         setErrorState({ isOpen: true, title, message });
@@ -80,6 +80,10 @@ export function useMainPageController(graph) {
     const handlePause = () => {
         pause();
     };
+
+    const handleResume = () => {
+        resume();
+    }
     const handleReset = () => {
         reset();
         setSimulationSteps([]); 
@@ -176,6 +180,7 @@ export function useMainPageController(graph) {
     activeCategory,
     selectedAlgo,
     currentFrame,
+    itsPlaying: isPlaying,
     activeLineIndex: currentFrame?.codeLine ?? null,
     currentCode: CODES[selectedAlgo],
     auxLabel: getAuxLabel(),
@@ -195,6 +200,7 @@ export function useMainPageController(graph) {
     handleSelectCategory,
     handleEjecutarAlgoritmo,
     handlePause,
+    handleResume,
     handleReset,
     closeErrorModal,
     setIsAddOpen,
