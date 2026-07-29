@@ -70,17 +70,17 @@ export class Graph{
    * @param {Node} _node - Nodo a eliminar.
    * @returns {boolean} `true` si se eliminó con éxito, `false` si el nodo no existía.
    */
-    removeNode(_node){
-        if(!this.nodes.has(_node.id)){
+    removeNode(_id){
+        if(!this.nodes.has(_id)){
             return false;
         }
-        this.nodes.delete(_node.id);
-        this.adjacencyList.delete(_node.id);
+        this.nodes.delete(_id);
+        this.adjacencyList.delete(_id);
 
         this.adjacencyList.forEach((listEdge, nodeId) => {
             this.adjacencyList.set(
                 nodeId,
-                listEdge.filter((edge) => edge.to.id !== _node.id)
+                listEdge.filter((edge) => edge.to.id !== _id)
             );
         });
         return true;
@@ -93,18 +93,26 @@ export class Graph{
    * @param {Node} _nodeTarget - Nodo de destino.
    * @returns {boolean} `true` si la operación fue exitosa, `false` si alguno de los nodos no existe.
    */
-    removeEdge(_nodeOrigin, _nodeTarget){
-        if(!this.nodes.has(_nodeOrigin.id)){
-            return false;
-        }
-        if(!this.nodes.has(_nodeTarget.id)){
+    removeEdge(_idOrigin, _idTarget) {
+        // 1. Validar que ambos nodos existan usando los IDs recibidos
+        if (!this.nodes.has(_idOrigin) || !this.nodes.has(_idTarget)) {
             return false;
         }
         
-        this.adjacencyList.set(_nodeOrigin.id, this.adjacencyList.get(_nodeOrigin.id).filter(edge => edge.to !== _nodeTarget.id));
+        // 2. Filtrar la arista comparando edge.to.id con _idTarget
+        const originEdges = this.adjacencyList.get(_idOrigin) || [];
+        this.adjacencyList.set(
+            _idOrigin, 
+            originEdges.filter(edge => edge.to.id !== _idTarget)
+        );
 
-        if(!this.directed){
-            this.adjacencyList.set(_nodeTarget.id, this.adjacencyList.get(_nodeTarget.id).filter(edge => edge.to !== _nodeOrigin.id));
+        // 3. Si es no dirigido, remover también la arista inversa
+        if (!this.directed) {
+            const targetEdges = this.adjacencyList.get(_idTarget) || [];
+            this.adjacencyList.set(
+                _idTarget, 
+                targetEdges.filter(edge => edge.to.id !== _idOrigin)
+            );
         }
         return true;
     }

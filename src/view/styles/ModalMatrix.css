@@ -1,0 +1,171 @@
+/* ==========================================================================
+   MODAL MATRIX (Matriz de Adyacencia Visual)
+   ========================================================================== */
+
+/* Contenedor Principal */
+.modal-graph-matrix-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Encabezado de la vista */
+.graph-matrix-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.graph-matrix-section-header h4 {
+  color: var(--text-h);
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Envoltorio con scroll para matrices grandes */
+.graph-matrix-wrapper {
+  background-color: var(--card-inner-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem;
+  max-height: 420px;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Estado Vacío */
+.matrix-empty-state {
+  color: var(--text);
+  font-style: italic;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* Estilos de la Tabla */
+.graph-matrix-table {
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 14px;
+}
+
+.graph-matrix-table th,
+.graph-matrix-table td {
+  width: 44px;
+  height: 44px;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid var(--border);
+  box-sizing: border-box;
+}
+
+/* Esquina superior izquierda transparente */
+.corner-cell {
+  background-color: transparent;
+  border: none !important;
+}
+
+/* Cabeceras (Filas y Columnas de Nodos) */
+.header-cell {
+  background-color: var(--code-bg);
+  color: var(--text-h);
+  font-weight: 600;
+  user-select: none;
+}
+
+.row-header {
+  padding: 0 8px;
+  white-space: nowrap;
+}
+
+.row-header .node-title {
+  margin-right: 6px;
+}
+
+/* Celdas de la Matriz (0 ó 1 / Peso) */
+.matrix-cell {
+  background-color: var(--code-bg);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.matrix-cell:hover {
+  border-color: var(--accent);
+  background-color: rgba(45, 212, 191, 0.08);
+  color: var(--accent);
+}
+
+/* Estado Activo (Hay Conexión) */
+.matrix-cell.active {
+  background-color: var(--accent-light-bg);
+  color: var(--accent);
+  font-weight: bold;
+  border-color: var(--accent-border);
+}
+
+/* Pie y Leyenda Aclaratoria */
+.matrix-legend {
+  color: var(--text);
+  font-size: 12px;
+  text-align: right;
+  opacity: 0.8;
+}
+
+.matrix-legend code {
+  font-family: var(--mono);
+  color: var(--accent);
+}
+
+/* ==========================================================================
+   BOTONES Y ACCIONES
+   ========================================================================== */
+
+/* Botón Primario Pequeño (+ Agregar) */
+.btn-accent-sm {
+  background-color: var(--accent-light-bg);
+  color: var(--accent);
+  border: 1px solid var(--accent-border);
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+}
+
+.btn-accent-sm:hover {
+  background-color: var(--accent-bg);
+  color: var(--bg);
+}
+
+.btn-icon {
+  font-size: 15px;
+}
+
+/* Botón Rojo para Eliminar Nodo en Fila */
+.btn-danger-icon {
+  background: transparent;
+  border: none;
+  color: var(--danger);
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease;
+}
+
+.btn-danger-icon:hover {
+  background-color: rgba(241, 79, 79, 0.15);
+}

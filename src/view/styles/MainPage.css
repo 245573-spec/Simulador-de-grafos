@@ -13,7 +13,6 @@
 .main-layout-grid {
   display: grid;
   flex: 1;
-  /* 6Fr para panel izq, 13Fr para centro, 5Fr para panel derecho */
   grid-template-columns: 370px 1fr 240px; 
   gap: 20px;
   padding: 20px;
@@ -21,7 +20,7 @@
   min-height: 0;
 }
 
-/* Panel Izquierdo (Algoritmos y Código) */
+/* Panel Izquierdo */
 .left-panel {
   display: flex;
   flex-direction: column;
@@ -39,7 +38,7 @@
   min-height: 0;
 }
 
-/* Panel Centro (Lienzo y Toolbar) */
+/* Panel Centro */
 .center-panel {
   display: flex;
   flex-direction: column;
@@ -53,19 +52,21 @@
   flex: 1;
   min-height: 0;
   position: relative;
-  /* Borde y fondo del contenedor del Lienzo */
   border: 1px solid var(--border);
   border-radius: 16px;
   background-color: #0b0f19;
 }
 
+/* ELEVACIÓN DEL TOOLBAR: Garantiza recepcción de clics por encima del canvas */
 .toolbar-wrapper {
   flex-shrink: 0;
   display: flex;
   justify-content: center;
+  position: relative;
+  z-index: 20;
 }
 
-/* Panel Derecho (Variables) */
+/* Panel Derecho */
 .right-panel {
   display: flex;
   flex-direction: column;

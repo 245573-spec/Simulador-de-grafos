@@ -1,0 +1,118 @@
+/* Fondo oscuro con efecto Blur */
+.modal-error-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(9, 13, 22, 0.8);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* Tarjeta principal del Modal */
+.modal-error-card {
+  position: relative;
+  width: 90%;
+  max-width: 420px;
+  background-color: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: modalPopIn 0.2s ease-out;
+}
+
+/* Botón X de cierre superior */
+.modal-error-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s ease;
+}
+
+.modal-error-close-btn:hover {
+  color: var(--text-h);
+}
+
+/* Icono principal de advertencia */
+.modal-error-icon {
+  color: var(--danger);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Título de la alerta */
+.modal-error-title {
+  color: var(--text-h);
+  font-size: 20px;
+  margin-bottom: 14px;
+  font-weight: 600;
+}
+
+/* Contenedor destacado para el mensaje de error */
+.modal-error-danger-box {
+  width: 100%;
+  background-color: rgba(241, 79, 79, 0.12);
+  border: 1px solid rgba(241, 79, 79, 0.35);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+}
+
+/* Texto de mensaje resaltado en rojo */
+.modal-error-danger-text {
+  color: var(--danger);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* Botón principal 'Entendido' */
+.modal-error-confirm-btn {
+  width: 100%;
+  padding: 10px 16px;
+  background-color: var(--card-inner-bg);
+  color: var(--text-h);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-error-confirm-btn:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+/* Animación de entrada suave */
+@keyframes modalPopIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

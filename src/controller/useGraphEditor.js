@@ -38,17 +38,24 @@ export function useCanvasRenderer(canvasRef, currentState, graph) {
 
         const pulse = 0.5 + 0.5*Math.sin(timestamp/200);
 
-        graph.getAllEdges().forEach(edge => {
+       const allEdges = graph.getAllEdges();
+
+        allEdges.forEach(edge => {
           const edgeKey = `${edge.from.id}-${edge.to.id}`;
           const reverseEdgeKey = `${edge.to.id}-${edge.from.id}`;
 
+          const hasReverseEdge = graph.directed && allEdges.some(
+            e => e.from.id === edge.to.id && e.to.id === edge.from.id
+          );
+
           const isHighlightedList = highlightedEdges.includes(edgeKey) || (!graph.directed && highlightedEdges.includes(reverseEdgeKey));
 
-          const thisIsActiveEdge = Boolean( activeEdge && (
-                                          (edge.from.id === activeEdge.from && edge.to.id === activeEdge.to) ||
-                                          (!graph.directed && edge.from.id === activeEdge.to && edge.to.id === activeEdge.from)
-                                        )
-                                  );
+          const thisIsActiveEdge = Boolean(
+            activeEdge && (
+              (edge.from.id === activeEdge.from && edge.to.id === activeEdge.to) ||
+              (!graph.directed && edge.from.id === activeEdge.to && edge.to.id === activeEdge.from)
+            )
+          );
 
           const isActiveEdge = isHighlightedList || thisIsActiveEdge;
 
@@ -56,7 +63,9 @@ export function useCanvasRenderer(canvasRef, currentState, graph) {
             isActive: isActiveEdge,
             pulse: pulse,
             isDirected: graph.directed, 
-            weight: graph.weighted? edge.weight : null
+            weight: graph.weighted ? edge.weight : null,
+            isCurved: hasReverseEdge,
+            curveOffset: 35 
           });
         });
 

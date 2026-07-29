@@ -1,13 +1,4 @@
-import { useState } from "react";
-
-// NUEVO: Importamos el simulador, el algoritmo BFS y el grafo que tu equipo preparó
-import { useSimulation } from "../../controller/useSimulation";
-import { runBFS } from "../../model/algorithms/bfs";
-import { runDFS } from "../../model/algorithms/dfs";
-import { runDijkstra } from "../../model/algorithms/dijkstra";
-import { runKruskal } from "../../model/algorithms/kruskal";
-import { runPrim } from "../../model/algorithms/prim";
-import { runBellmanFord } from "../../model/algorithms/bellman-ford";
+import { useMainPageController } from "../../controller/userMainPage";
 
 import Header from "../components/Header";
 import CategoryTabs from "../components/CategoryTabs";
@@ -16,77 +7,36 @@ import CodeViewer from "../components/CodeViewer";
 import VariablePanel from "../components/VariablePanel";
 import BottomToolbar from "../components/BottomToolbar";
 import GraphCanvas from "../canvas/GraphCanvas";
-
-import { code_bfs } from "../components/algorithmsView/bfsView"; 
-import { code_dfs } from "../components/algorithmsView/dfsView"; 
-import { code_prim } from "../components/algorithmsView/primView"; 
-import { code_kruskal } from "../components/algorithmsView/kruskalView"; 
-import { code_bellman } from "../components/algorithmsView/bellman-fordView"; 
-import { code_dijkstra } from "../components/algorithmsView/dijkstraView";
+import ModalGraphView from "../components/ModalGraphView";
+import ModalError from "../components/utils/ModalError";
+import ModalAdd from "../components/ModalAdd";
 
 import "../styles/MainPage.css";
 
 /*
- * MainPage
+ * MainPage (View)
  * --------
- * Vista principal que orquesta el layout de la aplicación y el estado global de algoritmos.
+ * Componente presentacional puro. Recibe datos y eventos del controlador.
  */
-function MainPage( {graph} ) {
+function MainPage({ graph }) {
+  const {
+    activeCategory,
+    selectedAlgo,
+    currentFrame,
+    activeLineIndex,
+    currentCode,
+    availableAlgorithms,
+    isGraphViewOpen,
+    isAddOpen,
+    errorState,
 
-  const algorithmsCategory = {
-    "Recorridos": ["BFS", "DFS"],
-    "Caminos minimos": ["Dijkstra", "Bellman-Ford"],
-    "Arboles de expansion": ["Prim", "Kruskal"],
-  };
-
-  const codes = {
-    "DFS": code_dfs(),
-    "BFS": code_bfs(),
-    "Prim": code_prim(),
-    "Kruskal": code_kruskal(),
-    "Dijkstra": code_dijkstra(),
-    "Bellman-Ford": code_bellman(),
-  };
-
-  const [activeCategory, setActiveCategory] = useState("Recorridos");
-
-  const [selectedAlgo, setSelectedAlgo] = useState(
-    algorithmsCategory["Recorridos"][0]
-  );
-
-  const [simulationSteps, setSimulationSteps] = useState([]);
-  
-
-  const { currentFrame, play, reset } = useSimulation(simulationSteps, 500);
-  const activeLineIndex = currentFrame?.codeLine ?? null;
-
-  const ALGORITHM_RUNNERS = {
-    'BFS': (g) => runBFS(g, 'A'),
-    'DFS': (g) => runDFS(g, 'A'),
-    'Dijkstra': (g) => runDijkstra(g, 'A'),
-    'Bellman-Ford': (g) => runBellmanFord(g, 'A'),
-    'Prim': (g) => runPrim(g, 'A'),
-    'Kruskal': (g) => runKruskal(g),
-  };
-
-  const handleEjecutarAlgoritmo = () => {
-    const runner = ALGORITHM_RUNNERS[selectedAlgo];
-    
-    if (!runner) return; // Validación de seguridad
-
-    reset();
-    setSimulationSteps(runner(graph));
-    play();
-  };
-
-  const handleSelectCategory = (category) => {
-    setActiveCategory(category);
-    
-    const newAlgoList = algorithmsCategory[category];
-    if (newAlgoList && newAlgoList.length > 0) {
-      setSelectedAlgo(newAlgoList[0]);
-    }
-  };
+    setSelectedAlgo,
+    setIsGraphViewOpen,
+    setIsAddOpen,
+    handleSelectCategory,
+    handleEjecutarAlgoritmo,
+    closeErrorModal
+  } = useMainPageController(graph);
 
   return (
     <div className="main-page-wrapper">
@@ -94,7 +44,7 @@ function MainPage( {graph} ) {
 
       <CategoryTabs
         activeCategory={activeCategory}
-        onSelectCategory={handleSelectCategory} 
+        onSelectCategory={handleSelectCategory}
       />
 
       {/* Rejilla Principal de Trabajo */}
@@ -104,36 +54,56 @@ function MainPage( {graph} ) {
         <aside className="left-panel">
           <div className="sidebar-wrapper">
             <Sidebar 
-              algorithms={algorithmsCategory[activeCategory]}
+              algorithms={availableAlgorithms}
               selectedAlgo={selectedAlgo}
               onSelectAlgorithm={setSelectedAlgo}  
             />
           </div>
           <div className="code-viewer-wrapper-slot">
-            <CodeViewer code={codes[selectedAlgo]} activeLineIndex={activeLineIndex} />
+            <CodeViewer code={currentCode} activeLineIndex={activeLineIndex} />
           </div>
         </aside>
 
         {/* Panel Centro: Lienzo de Grafo y Toolbar */}
         <section className="center-panel">
           <div className="canvas-wrapper">
-            {/* NUEVO: Enviamos el currentState al lienzo para que el hook de tu equipo pueda dibujarlo */}
             <GraphCanvas currentState={currentFrame} graph={graph} />
           </div>
 
           <div className="toolbar-wrapper">
-            {/* NUEVO: Conectamos la acción al botón Ejecutar de la barra */}
-            <BottomToolbar onEjecutar={handleEjecutarAlgoritmo} />
+            <BottomToolbar 
+              onEjecutar={handleEjecutarAlgoritmo} 
+              onOpenGraphView={() => setIsGraphViewOpen(true)}
+              onOpenAdd = {() => setIsAddOpen(true)}
+            />
           </div>
         </section>
 
         {/* Panel Derecho: Estado de Variables */}
         <aside className="right-panel">
-          {/* NUEVO: Enviamos el frame actual al panel lateral para actualizar los textos en vivo */}
           <VariablePanel frame={currentFrame} />
         </aside>
 
       </main>
+
+      <ModalGraphView 
+        graph={graph}
+        isOpen={isGraphViewOpen}
+        onClose={() => setIsGraphViewOpen(false)}
+      />
+
+      <ModalAdd 
+        graph={graph}
+        isOpen={isAddOpen}
+        onClose={() => setIsAddOpen(false)}
+      />
+
+      <ModalError 
+        isOpen={errorState.isOpen}
+        title={errorState.title}
+        message={errorState.message}
+        onClose={closeErrorModal}
+      />
     </div>
   );
 }
