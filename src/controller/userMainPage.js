@@ -159,6 +159,18 @@ export function useMainPageController(graph) {
         refreshGraph(); 
     };
 
+    // Función auxiliar para mantener la vista limpia (Lógica de negocio en el controlador)
+    const getAuxLabel = () => {
+        switch(selectedAlgo) {
+            case "DFS": return "Pila";
+            case "Dijkstra":
+            case "Prim": return "Cola de Prioridad";
+            case "Kruskal": return "Aristas Restantes";
+            case "Bellman-Ford": return "Distancias";
+            default: return "Cola"; // BFS
+        }
+    };
+
   return {
     // Estado
     activeCategory,
@@ -166,6 +178,7 @@ export function useMainPageController(graph) {
     currentFrame,
     activeLineIndex: currentFrame?.codeLine ?? null,
     currentCode: CODES[selectedAlgo],
+    auxLabel: getAuxLabel(),
     availableAlgorithms: ALGORITHMS_CATEGORY[activeCategory],
     isGraphViewOpen,
     errorState,
