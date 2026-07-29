@@ -1,3 +1,4 @@
+import "../../styles/WhoStyles/WhoTabs.css"
 function WhoTabs({ activeTab, onSelectTab }) {
 
     const tabs = [
@@ -7,6 +8,7 @@ function WhoTabs({ activeTab, onSelectTab }) {
     ];
 
     return (
+
         <nav className="who-tabs">
 
             {tabs.map((tab) => {
@@ -14,19 +16,23 @@ function WhoTabs({ activeTab, onSelectTab }) {
                 const isActive = activeTab === tab;
 
                 return (
+
                     <button
                         key={tab}
-                        onClick={() => onSelectTab(tab)}
                         className={`tab-button ${isActive ? "active" : ""}`}
+                        onClick={() => onSelectTab(tab)}
                     >
                         {tab}
                     </button>
+
                 );
 
             })}
 
         </nav>
+
     );
+
 }
 
 export default WhoTabs;

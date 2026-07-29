@@ -1,0 +1,40 @@
+/* ===========================================
+   WHO SPACE
+   =========================================== */
+
+.who-space {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+
+    padding: 28px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    background-color: var(--bg);
+
+    box-sizing: border-box;
+}
+
+/* Scroll */
+
+.who-space::-webkit-scrollbar {
+    width: 8px;
+}
+
+.who-space::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.who-space::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 999px;
+}
+
+.who-space::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+}

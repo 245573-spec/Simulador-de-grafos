@@ -1,0 +1,24 @@
+/* ===========================================
+   WHO PAGE
+   =========================================== */
+
+.who-page {
+    display: flex;
+    flex-direction: column;
+
+    width: 100vw;
+    height: 100vh;
+
+    overflow: hidden;
+
+    background-color: var(--bg);
+    color: var(--text-h);
+}
+
+/* El contenido ocupa todo el espacio restante
+   después del Header y las Tabs */
+
+.who-page > :last-child {
+    flex: 1;
+    min-height: 0;
+}

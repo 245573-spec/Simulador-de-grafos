@@ -1,4 +1,5 @@
 import ItCard from "./ItCards";
+import "../../styles/WhoStyles/IntegrantesSection.css";
 import elfeo from "../../../assets/team/elfeo.jpg"
 import marco from "../../../assets/team/Marco.jpg"
 import max from "../../../assets/team/max.jpeg"
@@ -15,28 +16,28 @@ function IntegrantesSection() {
             id: 1,
             image: marco,
             name: "Marco A. Aroni Perez",
-            role: "Desarrollador Front-End",
+            role: "Intento de Desarrollador Front-End",
             description: "Encargado del diseño e implementación de la interfaz del simulador."
         },
         {
             id: 2,
             image: max,
-            name: "Max S. Olguino Nuñez",
-            role: "Project Manager",
+            name: "Max S. Holguino Nuñez",
+            role: "Intento de Project Manager",
             description: "Encargado de la supervisión del proyecto(Desarrollador Full-Stack)."
         },
         {
             id: 3,
             image: elfeo,
             name: "Alvaro O. Quispe Ballón",
-            role: "Desarrollador Back-End",
+            role: "Intento de Desarrollador Back-End",
             description: "Encargado del modelado de animaciones."
         },
         {
             id: 4,
             image: carlos,
             name: "Carlos Quispe Crispín",
-            role: "Desarrollador Back-End",
+            role: "Intento de Desarrollador Back-End",
             description:"Encargado del mapeo de algoritmos"
         }
     ];
