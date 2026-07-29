@@ -76,7 +76,7 @@
   color: #fca5a5;
 }
 
-/* Botón Destacado "Ejecutar" */
+/* Botón Ejecutar */
 .btn-execute {
   display: flex;
   align-items: center;
@@ -84,7 +84,7 @@
   padding: 8px 24px;
   border: none;
   border-radius: 9999px;
-  
+ 
   background-color: var(--accent);
   color: #0b0f19;
   font-size: 14px;
@@ -97,6 +97,52 @@
 .btn-execute:hover {
   filter: brightness(1.1);
   box-shadow: 0 6px 12px -2px rgba(45, 212, 191, 0.35);
+}
+/* Botón Pausar */
+.btn-pause {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 24px;
+  border: 1px solid var(--btn-pause-border);
+  border-radius: 9999px;
+  background-color: var(--btn-pause-bg);
+  color: var(--btn-pause-text);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 145, 0, 0.15);
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-pause:hover {
+  background-color: var(--btn-pause-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(255, 145, 0, 0.35);
+}
+
+/* Botón Reset */
+.btn-reset {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 24px;
+  border: 1px solid var(--btn-reset-border);
+  border-radius: 9999px;
+  background-color: var(--btn-reset-bg);
+  color: var(--btn-reset-text);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-reset:hover {
+  background-color: var(--btn-reset-hover-bg);
+  color: var(--btn-reset-hover-text);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(255, 255, 255, 0.1);
 }
 
 /* Adaptación responsive */

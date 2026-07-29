@@ -145,4 +145,13 @@ export class Graph{
         //eee
         return Array.from(this.nodes.values());
     }
+
+    /**
+   * Limpia completamente el grafo, eliminando todos los nodos y aristas.
+   * Conserva las propiedades `directed` y `weighted`.
+   */
+    clear() {
+        this.nodes.clear();
+        this.adjacencyList.clear();
+    }
 }

@@ -18,7 +18,7 @@ export function useSimulation(algorithmSteps, speedMs = 1000) {
             setIsPlaying(false);
         }
 
-        return () => clearInterval(timer);
+        return () => clearTimeout(timer);
     }, [isPlaying, currentStepIndex, algorithmSteps.length, speedMs, isFinished]);
 
     const play = () => {

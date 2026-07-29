@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useSimulation } from "./useSimulation";
 
+import { Graph } from "../model/obj/Graph"
+
 // Importaciones de modelo/algoritmos en el controlador
 import { runBFS } from "../model/algorithms/bfs";
 import { runDFS } from "../model/algorithms/dfs";
@@ -56,7 +58,7 @@ export function useMainPageController(graph) {
         message: ""
     });
 
-    const { currentFrame, play, reset } = useSimulation(simulationSteps, velocity);
+    const { currentFrame, pause,play, reset } = useSimulation(simulationSteps, velocity);
 
     const showError = (title, message) => {
         setErrorState({ isOpen: true, title, message });
@@ -75,11 +77,20 @@ export function useMainPageController(graph) {
         play();
     };
 
+    const handlePause = () => {
+        pause();
+    };
+    const handleReset = () => {
+        reset();
+        setSimulationSteps([]); 
+    };
+
     const handleSelectCategory = (category) => {
         setActiveCategory(category);
+        reset();
         const newAlgoList = ALGORITHMS_CATEGORY[category];
         if (newAlgoList && newAlgoList.length > 0) {
-        setSelectedAlgo(newAlgoList[0]);
+            setSelectedAlgo(newAlgoList[0]);
         }
     };
 
@@ -129,8 +140,24 @@ export function useMainPageController(graph) {
         };
 
 
-  const [isAddOpen, setIsAddOpen] = useState(false);
-  const [isSpeedOpen, setIsSpeedOpen] = useState(false);
+    const [isAddOpen, setIsAddOpen] = useState(false);
+    const [isSpeedOpen, setIsSpeedOpen] = useState(false);
+
+    const [showSubtitles, setShowSubtitles] = useState(false);
+    const toggleSubtitles = () => {
+        setShowSubtitles((prev) => !prev);
+    };
+    useEffect(() => {
+        if (showSubtitles) {
+            setVelocity(3000);
+        }
+    }, [showSubtitles]);
+
+    const handleDeleteGraph = () => {
+        reset();     
+        graph.clear();
+        refreshGraph(); 
+    };
 
   return {
     // Estado
@@ -147,17 +174,22 @@ export function useMainPageController(graph) {
     isDirected: graph?.directed ?? false,
     velocity,
     isSpeedOpen,
+    showSubtitles,
 
     // Acciones/Manejadores
     setSelectedAlgo,
     setIsGraphViewOpen,
     handleSelectCategory,
     handleEjecutarAlgoritmo,
+    handlePause,
+    handleReset,
     closeErrorModal,
     setIsAddOpen,
     toggleWeighted,
     toggleDirected,
     setVelocity,
     setIsSpeedOpen,
+    toggleSubtitles,
+    handleDeleteGraph,
   };
 }

@@ -9,7 +9,7 @@ import "../styles/Header.css";
  * -------
  * Muestra el encabezado principal de la aplicación.
  */
-function Header({isWeighted, isDirected, onToggleWeighted, onToggleDirected, setSubTitles, onOpenSpeed}) {
+function Header({isWeighted, isDirected, onToggleWeighted, onToggleDirected,showTitles, setSubTitles, onOpenSpeed}) {
   const [showSupportMenu, setShowSupportMenu] = useState(false);
   const navigate = useNavigate();
   return (
@@ -63,7 +63,7 @@ function Header({isWeighted, isDirected, onToggleWeighted, onToggleDirected, set
               Velocidad
             </button>
 
-            <button onClick={setSubTitles}>
+            <button type="button" className={`btn-support ${showTitles ? 'active' : ''}`} onClick={setSubTitles}>
               <SlBubble />
               Subtitulado
             </button>

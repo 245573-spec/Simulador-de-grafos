@@ -34,18 +34,24 @@ function MainPage({ graph }) {
     isWeighted,
     velocity,
     isSpeedOpen,
+    showSubtitles,
 
     setSelectedAlgo,
     setIsGraphViewOpen,
     setIsAddOpen,
     handleSelectCategory,
     handleEjecutarAlgoritmo,
+    handlePause,
+    handleReset,
     closeErrorModal,
     toggleDirected,
     toggleWeighted,
     setVelocity,
     setIsSpeedOpen,
+    toggleSubtitles,
+    handleDeleteGraph,
   } = useMainPageController(graph);
+
 
   return (
     <div className="main-page-wrapper">
@@ -55,6 +61,8 @@ function MainPage({ graph }) {
       onToggleDirected={toggleDirected}
       onToggleWeighted={toggleWeighted}
       onOpenSpeed={() => setIsSpeedOpen(true)}
+      showTitles={showSubtitles}
+      setSubTitles={toggleSubtitles}
        />
 
       <CategoryTabs
@@ -82,14 +90,20 @@ function MainPage({ graph }) {
         {/* Panel Centro: Lienzo de Grafo y Toolbar */}
         <section className="center-panel">
           <div className="canvas-wrapper">
-            <GraphCanvas currentState={currentFrame} graph={graph} />
+            <GraphCanvas
+             currentState={currentFrame} graph={graph} 
+             showDescription={showSubtitles}
+             />
           </div>
 
           <div className="toolbar-wrapper">
             <BottomToolbar 
+              onPausar={handlePause}
+              onReset={handleReset}
               onEjecutar={handleEjecutarAlgoritmo} 
               onOpenGraphView={() => setIsGraphViewOpen(true)}
               onOpenAdd = {() => setIsAddOpen(true)}
+              onDeleteGraph={handleDeleteGraph}
             />
           </div>
         </section>

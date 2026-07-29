@@ -38,6 +38,7 @@ canvas {
   --border: #1e293b;
   --border-subtle: rgba(255, 255, 255, 0.05);
   --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+  --shadow-light: 0 0 15px 1px rgba(15, 130, 125, 0.25);
 
   /* Color Acento Cyan / Turquesa */
   --accent: #2dd4bf;
@@ -45,6 +46,25 @@ canvas {
   --accent-bg: #2dd4bf; /* Para el botón seleccionado de 'Prim' / 'Dijkstra' */
   --accent-light-bg: rgba(45, 212, 191, 0.1);
   --accent-border: rgba(45, 212, 191, 0.3);
+
+  /* Botón Ejecutar / Play (Verde / Turquesa Primario) */
+  --btn-execute-bg: #00e676;
+  --btn-execute-text: #0b1120;
+  --btn-execute-hover: #00c853;
+  --btn-execute-shadow: rgba(0, 230, 118, 0.35);
+
+  /* Botón Pausar (Ámbar / Naranja Advertencia) */
+  --btn-pause-bg: rgba(255, 145, 0, 0.15);
+  --btn-pause-border: #ff9100;
+  --btn-pause-text: #ffa726;
+  --btn-pause-hover: rgba(255, 145, 0, 0.3);
+
+  /* Botón Reset / Reinicio (Gris Oscuro / Neutro) */
+  --btn-reset-bg: #1e293b;
+  --btn-reset-border: #334155;
+  --btn-reset-text: #94a3b8;
+  --btn-reset-hover-bg: #334155;
+  --btn-reset-hover-text: #ffffff;
   
   /* Rojo peligro / Eliminar */
   --danger: #f14f4f;
