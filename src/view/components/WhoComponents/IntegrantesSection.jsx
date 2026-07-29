@@ -21,7 +21,7 @@ function IntegrantesSection() {
         {
             id: 2,
             image: max,
-            name: "Max S. Olguino Nuñez",
+            name: "Max S. Holguino Nuñez",
             role: "Project Manager",
             description: "Encargado de la supervisión del proyecto(Desarrollador Full-Stack)."
         },
