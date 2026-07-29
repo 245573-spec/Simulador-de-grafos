@@ -41,69 +41,96 @@ const ALGORITHM_RUNNERS = {
   'Kruskal': (g) => runKruskal(g),
 };
 
+
 export function useMainPageController(graph) {
-  const [activeCategory, setActiveCategory] = useState("Recorridos");
-  const [selectedAlgo, setSelectedAlgo] = useState(ALGORITHMS_CATEGORY["Recorridos"][0]);
-  const [isGraphViewOpen, setIsGraphViewOpen] = useState(false);
-  const [simulationSteps, setSimulationSteps] = useState([]);
-  
-  const [errorState, setErrorState] = useState({
-    isOpen: false,
-    title: "",
-    message: ""
-  });
+    const [activeCategory, setActiveCategory] = useState("Recorridos");
+    const [selectedAlgo, setSelectedAlgo] = useState(ALGORITHMS_CATEGORY["Recorridos"][0]);
+    const [isGraphViewOpen, setIsGraphViewOpen] = useState(false);
+    const [simulationSteps, setSimulationSteps] = useState([]);
+    
+    const [velocity, setVelocity] = useState(500);
 
-  const { currentFrame, play, reset } = useSimulation(simulationSteps, 500);
+    const [errorState, setErrorState] = useState({
+        isOpen: false,
+        title: "",
+        message: ""
+    });
 
-  const showError = (title, message) => {
-    setErrorState({ isOpen: true, title, message });
-  };
+    const { currentFrame, play, reset } = useSimulation(simulationSteps, velocity);
 
-  const closeErrorModal = () => {
-    setErrorState(prev => ({ ...prev, isOpen: false }));
-  };
+    const showError = (title, message) => {
+        setErrorState({ isOpen: true, title, message });
+    };
 
-  const handleEjecutarAlgoritmo = () => {
-    const runner = ALGORITHM_RUNNERS[selectedAlgo];
-    if (!runner) return;
+    const closeErrorModal = () => {
+        setErrorState(prev => ({ ...prev, isOpen: false }));
+    };
 
-    reset();
-    setSimulationSteps(runner(graph));
-    play();
-  };
+    const handleEjecutarAlgoritmo = () => {
+        const runner = ALGORITHM_RUNNERS[selectedAlgo];
+        if (!runner) return;
 
-  const handleSelectCategory = (category) => {
-    setActiveCategory(category);
-    const newAlgoList = ALGORITHMS_CATEGORY[category];
-    if (newAlgoList && newAlgoList.length > 0) {
-      setSelectedAlgo(newAlgoList[0]);
-    }
-  };
+        reset();
+        setSimulationSteps(runner(graph));
+        play();
+    };
 
-  // Validaciones de compatibilidad de grafo segun la categoría
-  useEffect(() => {
-    if (activeCategory === 'Arboles de expansion' && graph?.directed) {
-      showError(
-        "Grafo Incompatible", 
-        "La categoría 'Árboles de expansión' requiere un grafo NO dirigido."
-      );
-      setActiveCategory('Recorridos');
-      setSelectedAlgo("BFS");
-      return;
-    }
+    const handleSelectCategory = (category) => {
+        setActiveCategory(category);
+        const newAlgoList = ALGORITHMS_CATEGORY[category];
+        if (newAlgoList && newAlgoList.length > 0) {
+        setSelectedAlgo(newAlgoList[0]);
+        }
+    };
 
-    if (activeCategory === 'Caminos minimos' && !graph?.weighted) {
-      showError(
-        "Grafo Incompatible", 
-        "La categoría 'Caminos mínimos' requiere que el grafo sea PONDERADO."
-      );
-      setActiveCategory('Recorridos');
-      setSelectedAlgo("BFS");
-      return;
-    }
-  }, [activeCategory, graph?.directed, graph?.weighted]);
+    // Validaciones de compatibilidad de grafo segun la categoría
+    useEffect(() => {
+        if (activeCategory === 'Arboles de expansion' && graph?.directed) {
+        showError(
+            "Grafo Incompatible", 
+            "La categoría 'Árboles de expansión' requiere un grafo NO dirigido."
+        );
+        setActiveCategory('Recorridos');
+        setSelectedAlgo("BFS");
+        return;
+        }
+        if (activeCategory === 'Arboles de expansion' && !graph?.weighted) {
+        showError(
+            "Grafo Incompatible", 
+            "La categoría 'Árboles de expansión' requiere que el grafo sea PONDERADO."
+        );
+        setActiveCategory('Recorridos');
+        setSelectedAlgo("BFS");
+        return;
+        }
+        if (activeCategory === 'Caminos minimos' && !graph?.weighted) {
+        showError(
+            "Grafo Incompatible", 
+            "La categoría 'Caminos mínimos' requiere que el grafo sea PONDERADO."
+        );
+        setActiveCategory('Recorridos');
+        setSelectedAlgo("BFS");
+        return;
+        }
+    }, [activeCategory, graph?.directed, graph?.weighted]);
+
+    const [, setTick] = useState(0);
+    const refreshGraph = () => setTick(prev => prev + 1);
+    const toggleWeighted = () => {
+        if (!graph) return;
+            graph.weighted = !graph.weighted; 
+            refreshGraph();
+        };
+
+    const toggleDirected = () => {
+        if (!graph) return;
+            graph.directed = !graph.directed;
+            refreshGraph(); 
+        };
+
 
   const [isAddOpen, setIsAddOpen] = useState(false);
+  const [isSpeedOpen, setIsSpeedOpen] = useState(false);
 
   return {
     // Estado
@@ -116,6 +143,10 @@ export function useMainPageController(graph) {
     isGraphViewOpen,
     errorState,
     isAddOpen,
+    isWeighted: graph?.weighted ?? false,
+    isDirected: graph?.directed ?? false,
+    velocity,
+    isSpeedOpen,
 
     // Acciones/Manejadores
     setSelectedAlgo,
@@ -124,5 +155,9 @@ export function useMainPageController(graph) {
     handleEjecutarAlgoritmo,
     closeErrorModal,
     setIsAddOpen,
+    toggleWeighted,
+    toggleDirected,
+    setVelocity,
+    setIsSpeedOpen,
   };
 }

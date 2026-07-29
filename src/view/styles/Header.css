@@ -109,6 +109,12 @@
   transform: scale(0.96);
 }
 
+.btn-support.active {
+  background-color: var(--accent-light-bg-btn);
+  color: var(--text-b);
+  border-color: var(--accent-color); /* Opcional: un borde para destacar */
+}
+
 /* Responsivo */
 @media (max-width: 640px) {
   .header-container {

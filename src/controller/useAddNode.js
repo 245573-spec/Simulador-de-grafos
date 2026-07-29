@@ -11,6 +11,7 @@ const getRandomPosition = () => {
   return { x, y };
 };
 
+
 export function useModalAddController({ graph, onClose, onGraphChange }) {
   const [activeTab, setActiveTab] = useState('node');
 
@@ -45,7 +46,7 @@ export function useModalAddController({ graph, onClose, onGraphChange }) {
     const finalX = posX !== '' ? Number(posX) : randomPos.x;
     const finalY = posY !== '' ? Number(posY) : randomPos.y;
 
-    const newNode = new Node(cleanId, finalX, finalY);
+    const newNode = new Node(cleanId, cleanId, finalX, finalY);
     newNode.x = finalX;
     newNode.y = finalY;
 

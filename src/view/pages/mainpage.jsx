@@ -10,6 +10,7 @@ import GraphCanvas from "../canvas/GraphCanvas";
 import ModalGraphView from "../components/ModalGraphView";
 import ModalError from "../components/utils/ModalError";
 import ModalAdd from "../components/ModalAdd";
+import ModalSpeed from "../components/ModalSpeed";
 
 import "../styles/MainPage.css";
 
@@ -29,18 +30,32 @@ function MainPage({ graph }) {
     isGraphViewOpen,
     isAddOpen,
     errorState,
+    isDirected,
+    isWeighted,
+    velocity,
+    isSpeedOpen,
 
     setSelectedAlgo,
     setIsGraphViewOpen,
     setIsAddOpen,
     handleSelectCategory,
     handleEjecutarAlgoritmo,
-    closeErrorModal
+    closeErrorModal,
+    toggleDirected,
+    toggleWeighted,
+    setVelocity,
+    setIsSpeedOpen,
   } = useMainPageController(graph);
 
   return (
     <div className="main-page-wrapper">
-      <Header />
+      <Header 
+      isDirected={isDirected}
+      isWeighted={isWeighted}
+      onToggleDirected={toggleDirected}
+      onToggleWeighted={toggleWeighted}
+      onOpenSpeed={() => setIsSpeedOpen(true)}
+       />
 
       <CategoryTabs
         activeCategory={activeCategory}
@@ -103,6 +118,13 @@ function MainPage({ graph }) {
         title={errorState.title}
         message={errorState.message}
         onClose={closeErrorModal}
+      />
+
+      <ModalSpeed
+        isOpen={isSpeedOpen}
+        onClose={() => setIsSpeedOpen(false)}
+        velocity={velocity}
+        onVelocityChange={setVelocity}
       />
     </div>
   );

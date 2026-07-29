@@ -9,7 +9,7 @@ import "../styles/Header.css";
  * -------
  * Muestra el encabezado principal de la aplicación.
  */
-function Header() {
+function Header({isWeighted, isDirected, onToggleWeighted, onToggleDirected, setSubTitles, onOpenSpeed}) {
   const [showSupportMenu, setShowSupportMenu] = useState(false);
   const navigate = useNavigate();
   return (
@@ -48,22 +48,22 @@ function Header() {
     {showSupportMenu && (
         <div className="support-menu">
 
-            <button>
+            <button type="button" className={`btn-support ${isWeighted ? 'active' : ''}`} onClick={onToggleWeighted}>
               <CgAlignBottom />
               Ponderado
             </button>
 
-            <button>
+            <button type="button" className={`btn-support ${isDirected ? 'active' : ''}`} onClick={onToggleDirected}>
               <CgArrowLongRight />
               Dirigido
             </button>
 
-            <button>
+            <button onClick={onOpenSpeed}>
               <SlControlForward />
               Velocidad
             </button>
 
-            <button>
+            <button onClick={setSubTitles}>
               <SlBubble />
               Subtitulado
             </button>

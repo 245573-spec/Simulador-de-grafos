@@ -1,0 +1,165 @@
+/* Backdrop oscuro con desenfoque acorde al tema */
+.modal-speed-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(9, 13, 22, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(6px);
+}
+
+/* Tarjeta contenedora con la paleta nocturna */
+.modal-speed-card {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  width: 90%;
+  max-width: 400px;
+  border-radius: 12px;
+  padding: 24px;
+  position: relative;
+  box-shadow: var(--shadow);
+  color: var(--text);
+}
+
+/* Botón de cerrar */
+.modal-speed-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.modal-speed-close-btn:hover {
+  color: var(--text-h);
+  background-color: var(--accent-light-bg);
+}
+
+/* Encabezado */
+.modal-speed-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.modal-speed-icon {
+  color: var(--accent);
+}
+
+.modal-speed-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-h);
+  margin: 0;
+}
+
+/* Cuerpo del modal */
+.modal-speed-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.speed-info {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  background: var(--card-inner-bg);
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+}
+
+.speed-value {
+  font-family: var(--mono);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.speed-label {
+  font-size: 0.875rem;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.slider-container {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+
+.slider-min-max {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+/* Estilos de la barra deslisante (Slider) */
+.speed-slider {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--card-inner-bg);
+  border: 1px solid var(--border);
+  outline: none;
+}
+
+.speed-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent-border);
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.speed-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.25);
+  background: #ffffff;
+}
+
+/* Pie de modal */
+.modal-speed-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal-speed-confirm-btn {
+  background: var(--accent-bg);
+  color: var(--text-b); /* Texto oscuro para contrastar con el cyan */
+  border: none;
+  padding: 8px 22px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-speed-confirm-btn:hover {
+  background: var(--accent-light-bg-btn);
+  box-shadow: 0 0 12px var(--accent-border);
+}

@@ -28,6 +28,14 @@ export class Graph{
         this.adjacencyList = new Map();
     }
 
+    setWeighted(_set){
+        this.weighted = _set;
+    }
+
+    setDirected(_set){
+        this.directed = _set;
+    }
+
     /**
    * Agrega un nuevo nodo al grafo.
    * @param {Node} _node - Objeto instancia de la clase Node.

@@ -32,6 +32,7 @@ canvas {
   /* Textos */
   --text: #94a3b8;
   --text-h: #f8fafc;
+  --text-b: #111827;
 
   /* Bordes y Sombras */
   --border: #1e293b;
@@ -40,6 +41,7 @@ canvas {
 
   /* Color Acento Cyan / Turquesa */
   --accent: #2dd4bf;
+  --accent-light-bg-btn:rgba(51, 245, 219, 0.619);
   --accent-bg: #2dd4bf; /* Para el botón seleccionado de 'Prim' / 'Dijkstra' */
   --accent-light-bg: rgba(45, 212, 191, 0.1);
   --accent-border: rgba(45, 212, 191, 0.3);
