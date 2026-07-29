@@ -110,7 +110,16 @@ function MainPage({ graph }) {
 
         {/* Panel Derecho: Estado de Variables */}
         <aside className="right-panel">
-          <VariablePanel frame={currentFrame} />
+          {/* MODIFICADO: Extraemos los datos de currentFrame y se los pasamos al panel.
+              Usamos el operador "?." por si currentFrame es null al inicio */}
+          <VariablePanel 
+            currentNode={currentFrame?.currentNode} 
+            visited={currentFrame?.visitedNodes || []} 
+            // Si es BFS leerá queueState, si luego haces DFS puedes hacer que lea stackState
+            auxiliaryStructure={currentFrame?.queueState || currentFrame?.stackState || []} 
+            // Cambiamos el título dependiendo del algoritmo seleccionado
+            auxLabel={selectedAlgo === "DFS" ? "Pila" : "Cola"} 
+          />
         </aside>
 
       </main>
