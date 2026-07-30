@@ -44,7 +44,7 @@ function BottomToolbar({ onEjecutar, onPausar, onResume, onReset, onOpenGraphVie
         </button>
         <button
           type="button"
-          className={isPlaying ? "btn-pause" : "btn-execute"}
+          className={isPlaying ? "btn-pause" : "btn-continue"}
           onClick={isPlaying ? onPausar : onResume}
         >
           {isPlaying ? (

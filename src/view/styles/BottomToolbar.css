@@ -145,6 +145,28 @@
   box-shadow: 0 6px 14px rgba(255, 255, 255, 0.1);
 }
 
+.btn-continue {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 24px;
+  border: none;
+  border-radius: 9999px;
+ 
+  background-color: var(--btn-continue-bg);
+  color: var(--btn-continue-text);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 6px -1px rgba(45, 212, 191, 0.2);
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-continue:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 6px 12px -2px var(--btn-continue-shadow);
+}
+
 /* Adaptación responsive */
 @media (max-width: 640px) {
   .toolbar-container {

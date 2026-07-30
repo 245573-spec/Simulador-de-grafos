@@ -47,11 +47,11 @@ canvas {
   --accent-light-bg: rgba(45, 212, 191, 0.1);
   --accent-border: rgba(45, 212, 191, 0.3);
 
-  /* Botón Ejecutar / Play (Verde / Turquesa Primario) */
-  --btn-execute-bg: #00e676;
-  --btn-execute-text: #0b1120;
-  --btn-execute-hover: #00c853;
-  --btn-execute-shadow: rgba(0, 230, 118, 0.35);
+  /* Botón continue d*/
+  --btn-continue-bg: #00e676;
+  --btn-continue-text: #0b1120;
+  --btn-continue-hover: #00c853;
+  --btn-continue-shadow: rgba(0, 230, 118, 0.35);
 
   /* Botón Pausar (Ámbar / Naranja Advertencia) */
   --btn-pause-bg: rgba(255, 145, 0, 0.15);
@@ -65,6 +65,7 @@ canvas {
   --btn-reset-text: #94a3b8;
   --btn-reset-hover-bg: #334155;
   --btn-reset-hover-text: #ffffff;
+
   
   /* Rojo peligro / Eliminar */
   --danger: #f14f4f;
