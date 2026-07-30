@@ -58,7 +58,7 @@ export function useMainPageController(graph) {
         message: ""
     });
 
-    const { currentFrame, pause,play, reset } = useSimulation(simulationSteps, velocity);
+    const { currentFrame, isPlaying, pause, play, resume, reset } = useSimulation(simulationSteps, velocity);
 
     const showError = (title, message) => {
         setErrorState({ isOpen: true, title, message });
@@ -80,6 +80,10 @@ export function useMainPageController(graph) {
     const handlePause = () => {
         pause();
     };
+
+    const handleResume = () => {
+        resume();
+    }
     const handleReset = () => {
         reset();
         setSimulationSteps([]); 
@@ -159,13 +163,27 @@ export function useMainPageController(graph) {
         refreshGraph(); 
     };
 
+    // Función auxiliar para mantener la vista limpia (Lógica de negocio en el controlador)
+    const getAuxLabel = () => {
+        switch(selectedAlgo) {
+            case "DFS": return "Pila";
+            case "Dijkstra":
+            case "Prim": return "Cola de Prioridad";
+            case "Kruskal": return "Aristas Restantes";
+            case "Bellman-Ford": return "Distancias";
+            default: return "Cola"; // BFS
+        }
+    };
+
   return {
     // Estado
     activeCategory,
     selectedAlgo,
     currentFrame,
+    itsPlaying: isPlaying,
     activeLineIndex: currentFrame?.codeLine ?? null,
     currentCode: CODES[selectedAlgo],
+    auxLabel: getAuxLabel(),
     availableAlgorithms: ALGORITHMS_CATEGORY[activeCategory],
     isGraphViewOpen,
     errorState,
@@ -182,6 +200,7 @@ export function useMainPageController(graph) {
     handleSelectCategory,
     handleEjecutarAlgoritmo,
     handlePause,
+    handleResume,
     handleReset,
     closeErrorModal,
     setIsAddOpen,

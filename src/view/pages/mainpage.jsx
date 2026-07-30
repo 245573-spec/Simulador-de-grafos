@@ -25,7 +25,9 @@ function MainPage({ graph }) {
     selectedAlgo,
     currentFrame,
     activeLineIndex,
+    itsPlaying,
     currentCode,
+    auxLabel,
     availableAlgorithms,
     isGraphViewOpen,
     isAddOpen,
@@ -42,6 +44,7 @@ function MainPage({ graph }) {
     handleSelectCategory,
     handleEjecutarAlgoritmo,
     handlePause,
+    handleResume,
     handleReset,
     closeErrorModal,
     toggleDirected,
@@ -100,6 +103,8 @@ function MainPage({ graph }) {
             <BottomToolbar 
               onPausar={handlePause}
               onReset={handleReset}
+              onResume={handleResume}
+              isPlaying={itsPlaying}
               onEjecutar={handleEjecutarAlgoritmo} 
               onOpenGraphView={() => setIsGraphViewOpen(true)}
               onOpenAdd = {() => setIsAddOpen(true)}
@@ -110,7 +115,12 @@ function MainPage({ graph }) {
 
         {/* Panel Derecho: Estado de Variables */}
         <aside className="right-panel">
-          <VariablePanel frame={currentFrame} />
+          <VariablePanel 
+            currentNode={currentFrame?.currentNode} 
+            visited={currentFrame?.visitedNodes || []} 
+            auxiliaryStructure={currentFrame?.queueState || currentFrame?.stackState || []} 
+            auxLabel={auxLabel} 
+          />
         </aside>
 
       </main>

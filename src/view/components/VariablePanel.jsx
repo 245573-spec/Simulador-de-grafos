@@ -6,7 +6,8 @@ import "../styles/VariablePanel.css";
  * Panel lateral derecho que muestra el estado de las variables (Nodo actual, Visitados, Cola/Pila).
  */
 function VariablePanel({
-  currentNode = "A",
+  // MODIFICADO: Cambiamos el valor por defecto de "A" a null
+  currentNode = null, 
   visited = [],
   auxiliaryStructure = [],
   auxLabel = "Cola / Pila",
@@ -23,7 +24,8 @@ function VariablePanel({
         <div className="variable-card card-row">
           <span className="variable-label">Nodo actual</span>
           <span className="current-node-badge">
-            {currentNode}
+            {/* MODIFICADO: Si hay un nodo actual lo mostramos, si no (null), mostramos un guion */}
+            {currentNode ? currentNode : "-"}
           </span>
         </div>
 
