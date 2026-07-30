@@ -2,7 +2,7 @@
 export function runBellmanFord(graph, startNodeId) {
     let steps = [];
     let distances = {};
-    let parents = {}; // Guardamos el camino óptimo
+    let parents = {};
     let nodes = graph.getAllNodes();
     let edges = graph.getAllEdges();
     let visited = new Set();
@@ -16,9 +16,7 @@ export function runBellmanFord(graph, startNodeId) {
         parents[node.id] = null;
     }
 
-    // Helper para capturar el estado en cada línea de código
     const captureFrame = (codeLineIndex, currentNode = null, activeEdge = null, description = "Algoritmo de Bellman-Ford") => {
-        // Al momento de agregar las aristas, solo queremos las que creen el camino óptimo
         let currentHighlightedEdges = [];
         for (let nodeId in parents) {
             if (parents[nodeId] !== null) {

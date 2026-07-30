@@ -102,19 +102,16 @@ export class Graph{
    * @returns {boolean} `true` si la operación fue exitosa, `false` si alguno de los nodos no existe.
    */
     removeEdge(_idOrigin, _idTarget) {
-        // 1. Validar que ambos nodos existan usando los IDs recibidos
         if (!this.nodes.has(_idOrigin) || !this.nodes.has(_idTarget)) {
             return false;
         }
         
-        // 2. Filtrar la arista comparando edge.to.id con _idTarget
         const originEdges = this.adjacencyList.get(_idOrigin) || [];
         this.adjacencyList.set(
             _idOrigin, 
             originEdges.filter(edge => edge.to.id !== _idTarget)
         );
 
-        // 3. Si es no dirigido, remover también la arista inversa
         if (!this.directed) {
             const targetEdges = this.adjacencyList.get(_idTarget) || [];
             this.adjacencyList.set(
@@ -142,7 +139,6 @@ export class Graph{
    * @returns {Nodes[]} Lista de todas las aristas para renderizado.
    */
     getAllNodes() {
-        //eee
         return Array.from(this.nodes.values());
     }
 

@@ -4,11 +4,9 @@ import Typewriter from "typewriter-effect";
 import "../styles/GraphCanvas.css";
 
 
-// Recibimos currentState desde MainPage
 function GraphCanvas({ currentState, graph , showDescription = false}) {
   const canvasRef = useRef(null);
 
-  // Le pasamos el ref y el estado actual al hook
   useCanvasRenderer(canvasRef, currentState, graph);
 
   const currentText =
@@ -33,10 +31,10 @@ function GraphCanvas({ currentState, graph , showDescription = false}) {
             <span className="description-tag">PASO ACTUAL</span>
           </div>
           <Typewriter
-              key={currentText} // 'key' fuerza la re-animación cuando cambia el mensaje
+              key={currentText}
               options={{
-                delay: 30, // Velocidad entre cada letra (ms)
-                cursor: "▌", // Cursor al estilo consola/diálogo retro
+                delay: 30,
+                cursor: "▌",
                 autoStart: true,
               }}
               onInit={(typewriter) => {
