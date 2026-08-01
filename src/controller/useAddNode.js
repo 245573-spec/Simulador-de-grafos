@@ -88,7 +88,6 @@ export function useModalAddController({ graph, onClose, onGraphChange }) {
 
     graph.addEdge(nodeOrigin, nodeTarget, graph.weighted ? Number(weight) : 1);
 
-    // Limpiar campos y cerrar modal
     setOriginId('');
     setTargetId('');
     setWeight(1);
