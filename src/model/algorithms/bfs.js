@@ -100,3 +100,4 @@ export function runBFS(graph, startNodeId) {
 
     return steps;
 }
+// Like si ves esto
