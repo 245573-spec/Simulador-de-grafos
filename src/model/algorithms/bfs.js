@@ -101,3 +101,4 @@ export function runBFS(graph, startNodeId) {
     return steps;
 }
 // Like si ves esto
+// no me mires con esos ojos
