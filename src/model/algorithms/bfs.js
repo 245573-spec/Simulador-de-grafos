@@ -100,8 +100,4 @@ export function runBFS(graph, startNodeId) {
 
     return steps;
 }
-// Like si ves esto
-// no me mires con esos ojos
-// mama mira aparezco en internet
-// sics seven
-// profe profe esteba esta sacando un arma de su mochila
+// Fin de la implementación del algoritmo BFS paso a paso
