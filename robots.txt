@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Dirección del mapa del sitio para rastreadores
+Sitemap: https://245573-spec.github.io/Simulador-de-grafos/sitemap.xml
