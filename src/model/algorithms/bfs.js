@@ -100,3 +100,4 @@ export function runBFS(graph, startNodeId) {
 
     return steps;
 }
+// Fin de la implementación del algoritmo BFS paso a paso
