@@ -64,11 +64,8 @@ export function useModalAddController({ graph, onClose, onGraphChange}) {
     const canvas = canvasRef.current;
     const rect = canvas.getBoundingClientRect();
 
-    const scaleX = canvas.width / rect.width;
-    const scaleY = canvas.height / rect.height;
-
-    const x = Math.round((e.clientX - rect.left));
-    const y = Math.round((e.clientY - rect.top));
+    const x = e.graphX !== undefined ? e.graphX : Math.round(e.clientX - rect.left);
+    const y = e.graphY !== undefined ? e.graphY : Math.round(e.clientY - rect.top);
 
     const newNode = new Node(pendingNodeId, pendingNodeId, x, y);
     const success = graph.addNode(newNode);
@@ -86,8 +83,7 @@ export function useModalAddController({ graph, onClose, onGraphChange}) {
 
   const handleContextMenu = (event) => {
     if (isInsertingNode) {
-      event.preventDefault();
-      handleCancelInsertion();
+      event.preventDefault();;
     }
   };
 

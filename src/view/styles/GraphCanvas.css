@@ -91,6 +91,7 @@
   display: block;
   cursor: crosshair;
   touch-action: none;
+  
 }
 
 /* Contenedor principal del lienzo */

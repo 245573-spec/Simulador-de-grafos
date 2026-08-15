@@ -3,13 +3,18 @@ import { drawNode } from '../view/canvas/renders/drawNode';
 import { drawEdge } from '../view/canvas/renders/drawEdge';
 
 
-export function useCanvasRenderer(canvasRef, currentState, graph) {
+export function useCanvasRenderer(canvasRef, currentState, graph, transform = {x:0, y:0, scale:0.8}) {
   const requestRef = useRef();
   const stateRef = useRef(currentState);
+  const transformRef = useRef(transform);
 
   useEffect(() => {
     stateRef.current = currentState;
   }, [currentState]);
+
+  useEffect(() => {
+    transformRef.current = transform;
+  }, [transform]);
 
   useEffect( () =>{
     const canvas = canvasRef.current;
@@ -19,14 +24,19 @@ export function useCanvasRenderer(canvasRef, currentState, graph) {
     const render = (timestamp) => {
         const rect = canvas.getBoundingClientRect();
         const dpr = window.devicePixelRatio || 1;
-
         if (canvas.width !== rect.width * dpr || canvas.height !== rect.height * dpr) {
           canvas.width = rect.width * dpr;
           canvas.height = rect.height * dpr;
-          ctx.scale(dpr, dpr);
         }
 
-        ctx.clearRect(0, 0, rect.width, rect.height);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        ctx.save();
+        ctx.scale(dpr, dpr);
+
+        const { x, y, scale } = transformRef.current;
+        ctx.translate(x, y);
+        ctx.scale(scale, scale);
 
         const {
           visitedNodes = [],
@@ -38,7 +48,7 @@ export function useCanvasRenderer(canvasRef, currentState, graph) {
 
         const pulse = 0.5 + 0.5*Math.sin(timestamp/200);
 
-       const allEdges = graph.getAllEdges();
+        const allEdges = graph.getAllEdges();
 
         allEdges.forEach(edge => {
           const edgeKey = `${edge.from.id}-${edge.to.id}`;
@@ -83,6 +93,7 @@ export function useCanvasRenderer(canvasRef, currentState, graph) {
             id: node.id
           });
         });
+        ctx.restore();
         requestRef.current = requestAnimationFrame(render);
       };
       requestRef.current = requestAnimationFrame(render);

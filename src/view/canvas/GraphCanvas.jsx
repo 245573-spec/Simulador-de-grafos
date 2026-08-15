@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { useCanvasRenderer } from "../../controller/useGraphEditor";
+import { useCanvasZoom } from "../../controller/useCanvaZoom";
 import Typewriter from "typewriter-effect";
 import "../styles/GraphCanvas.css";
 
@@ -21,7 +22,15 @@ function GraphCanvas({
 
   const canvasRef = useRef(null);
 
-  useCanvasRenderer(canvasRef, currentState, graph);
+  const { transform, getTransformedCoordinates } = useCanvasZoom(canvasRef, isInsertingNode);
+
+  useCanvasRenderer(canvasRef, currentState, graph, transform);
+
+  const handleCanvasClickWithTransform = (e) => {
+    const { graphX, graphY } = getTransformedCoordinates(e);
+    handleCanvaClickAdd({ ...e, graphX, graphY }, canvasRef);
+  };
+
 
   const currentText =
     currentState?.description ||
@@ -40,7 +49,7 @@ function GraphCanvas({
         width={800}
         height={600}
         className="main-canvas"
-        onClick={(e) => handleCanvaClickAdd(e, canvasRef)}
+        onClick={handleCanvasClickWithTransform}
         onContextMenu={(e) => handleContextMenu(e)}
         >
           Tu navegador no soporta el elemento Canvas.
