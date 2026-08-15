@@ -1,24 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Node } from '../model/obj/Node';
 
-const getRandomPosition = () => {
-  const minX = 100, maxX = 650;
-  const minY = 80, maxY = 420;
-
-  const x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
-  const y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
-
-  return { x, y };
-};
 
 
-export function useModalAddController({ graph, onClose, onGraphChange }) {
+export function useModalAddController({ graph, onClose, onGraphChange}) {
   const [activeTab, setActiveTab] = useState('node');
+  const [isInsertingNode, setIsInsertingNode] = useState(false);
+  const [pendingNodeId, setPendingNodeId] = useState(null);
 
   const [nodeId, setNodeId] = useState('');
-  const [posX, setPosX] = useState('');
-  const [posY, setPosY] = useState('');
-
   const [originId, setOriginId] = useState('');
   const [targetId, setTargetId] = useState('');
   const [weight, setWeight] = useState(1);
@@ -32,6 +22,16 @@ export function useModalAddController({ graph, onClose, onGraphChange }) {
     setFormError('');
   };
 
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && isInsertingNode) {
+        handleCancelInsertion();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isInsertingNode]);
+
   const handleAddNode = (e) => {
     e.preventDefault();
     setFormError('');
@@ -42,26 +42,53 @@ export function useModalAddController({ graph, onClose, onGraphChange }) {
       return;
     }
 
-    const randomPos = getRandomPosition();
-    const finalX = posX !== '' ? Number(posX) : randomPos.x;
-    const finalY = posY !== '' ? Number(posY) : randomPos.y;
 
-    const newNode = new Node(cleanId, cleanId, finalX, finalY);
-    newNode.x = finalX;
-    newNode.y = finalY;
+    const nodeExists = graph?.hasNode(cleanId);
 
-    const success = graph.addNode(newNode);
-
-    if (!success) {
+    if (nodeExists) {
       setFormError(`El nodo "${cleanId}" ya existe.`);
       return;
     }
 
+    setPendingNodeId(cleanId);
+    setIsInsertingNode(true);
+
     setNodeId('');
-    setPosX('');
-    setPosY('');
-    if (onGraphChange) onGraphChange();
-    onClose();
+    if (onClose) onClose();
+
+  };
+
+  const handleCanvaClickAdd = (e, canvasRef) => {
+    if (!isInsertingNode || !pendingNodeId || !canvasRef?.current) return;
+
+    const canvas = canvasRef.current;
+    const rect = canvas.getBoundingClientRect();
+
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+
+    const x = Math.round((e.clientX - rect.left));
+    const y = Math.round((e.clientY - rect.top));
+
+    const newNode = new Node(pendingNodeId, pendingNodeId, x, y);
+    const success = graph.addNode(newNode);
+
+    if (success) {
+      if (onGraphChange) onGraphChange();
+      handleCancelInsertion();
+    }
+  };
+
+  const handleCancelInsertion = () => {
+    setIsInsertingNode(false);
+    setPendingNodeId(null);
+  };
+
+  const handleContextMenu = (event) => {
+    if (isInsertingNode) {
+      event.preventDefault();
+      handleCancelInsertion();
+    }
   };
 
   const handleAddEdge = (e) => {
@@ -99,18 +126,18 @@ export function useModalAddController({ graph, onClose, onGraphChange }) {
     // Estado
     activeTab,
     nodeId,
-    posX,
-    posY,
     originId,
     targetId,
     weight,
     formError,
     nodes,
 
+  //Estado Insercion
+    isInsertingNode,
+    pendingNodeId,
+
     // Setters de inputs
     setNodeId,
-    setPosX,
-    setPosY,
     setOriginId,
     setTargetId,
     setWeight,
@@ -118,6 +145,9 @@ export function useModalAddController({ graph, onClose, onGraphChange }) {
     // Acciones/Manejadores
     handleTabChange,
     handleAddNode,
-    handleAddEdge
+    handleAddEdge,
+    handleCanvaClickAdd,
+    handleCancelInsertion,
+    handleContextMenu,
   };
 }

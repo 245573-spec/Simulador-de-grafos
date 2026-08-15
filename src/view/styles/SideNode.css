@@ -1,0 +1,69 @@
+.side-node-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-radius: 16px;
+    padding: 20px;
+    background-color: var(--code-bg);
+    border: 1px solid var(--border);
+    box-shadow:  var(--shadow);
+    caret-color: transparent;
+}
+
+.side-node-title {
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-h);
+    padding: 0 4px;
+    margin: 0;
+}
+
+.side-node-form{
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    justify-content: space-between;
+    overflow: hidden;
+    cursor: default;
+    
+}
+
+.side-node-form-input{
+    width: 60%;
+    height: 26px;
+    background-color: var(--card-inner-bg);
+    border: 1px solid var(--border);
+    padding: 10px;
+    border-radius: 6px;
+    color: var(--text-h);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease;
+    caret-color: var(--text);
+}
+
+.side-node-form-input:focus {
+     border-color: var(--accent);
+}
+
+.side-node-form-button{
+    width: 40%;
+    height: 26px;
+    font-weight: 550 !important;
+    font-size: 13px !important;
+    background-color: var(--accent);
+    border: none;
+    border-radius: 6px;
+    color: var(--text-b);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    caret-color: transparent;
+}
+
+.side-node-form-button:not(:disabled):hover {
+    opacity: 0.8;
+}

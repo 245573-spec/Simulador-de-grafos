@@ -4,29 +4,25 @@ import { LuX, LuPlus } from 'react-icons/lu';
 import { useModalAddController } from '../../controller/useAddNode';
 import '../styles/ModalAdd.css';
 
-export default function ModalAdd({ graph, isOpen, onClose, onGraphChange }) {
-  if (!isOpen) return null;
-
-  const {
+export default function ModalAdd({ graph, isOpen, onClose, addNodeProps }) {
+    const {
     activeTab,
     nodeId,
-    posX,
-    posY,
     originId,
     targetId,
     weight,
     formError,
     nodes,
     setNodeId,
-    setPosX,
-    setPosY,
     setOriginId,
     setTargetId,
     setWeight,
     handleTabChange,
     handleAddNode,
     handleAddEdge
-  } = useModalAddController({ graph, onClose, onGraphChange });
+  } = addNodeProps;
+
+  if (!isOpen) return null;
 
   return (
     <div className="modal-add-backdrop">
@@ -60,6 +56,7 @@ export default function ModalAdd({ graph, isOpen, onClose, onGraphChange }) {
           </div>
         )}
 
+        {/* Pestaña: Nuevo Nodo */}
         {activeTab === 'node' && (
           <form onSubmit={handleAddNode} className="modal-add-form">
             <div className="form-group">
@@ -74,33 +71,13 @@ export default function ModalAdd({ graph, isOpen, onClose, onGraphChange }) {
               />
             </div>
 
-            <div style={{ display: 'flex', gap: '12px' }}>
-              <div className="form-group" style={{ flex: 1 }}>
-                <label>Posición X (Opcional)</label>
-                <input
-                  type="number"
-                  placeholder="Auto"
-                  value={posX}
-                  onChange={(e) => setPosX(e.target.value)}
-                />
-              </div>
-              <div className="form-group" style={{ flex: 1 }}>
-                <label>Posición Y (Opcional)</label>
-                <input
-                  type="number"
-                  placeholder="Auto"
-                  value={posY}
-                  onChange={(e) => setPosY(e.target.value)}
-                />
-              </div>
-            </div>
-
             <button type="submit" className="modal-add-submit-btn">
               <LuPlus size={18} /> Agregar Nodo
             </button>
           </form>
         )}
 
+        {/* Pestaña: Nueva Arista */}
         {activeTab === 'edge' && (
           <form onSubmit={handleAddEdge} className="modal-add-form">
             <div className="form-group">

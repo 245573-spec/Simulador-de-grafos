@@ -4,7 +4,21 @@ import Typewriter from "typewriter-effect";
 import "../styles/GraphCanvas.css";
 
 
-function GraphCanvas({ currentState, graph , showDescription = false}) {
+function GraphCanvas({
+    currentState,
+    graph,
+    showDescription = false,
+    addNodeProps
+  }) {
+
+  const {
+      isInsertingNode,
+      pendingNodeId,
+      handleCanvaClickAdd,
+      handleCancelInsertion,
+      handleContextMenu
+    } = addNodeProps;
+
   const canvasRef = useRef(null);
 
   useCanvasRenderer(canvasRef, currentState, graph);
@@ -16,12 +30,19 @@ function GraphCanvas({ currentState, graph , showDescription = false}) {
   return (
     <main className="graph-canvas-container">
       <div className="canvas-badge">
-        <span className="badge-dot" />
-        <span className="badge-text">Lienzo de Grafo</span>
+        <span className={`badge-dot ${isInsertingNode ? "red" : "blue"}`}/>
+        {!isInsertingNode ? <span className="badge-text">Lienzo de Grafo</span> : <span>Haz clic en el área para colocar el nodo <strong>"{pendingNodeId}"</strong></span>}
       </div>
 
       <div className="canvas-viewport">
-        <canvas ref={canvasRef} className="main-canvas">
+        <canvas 
+        ref={canvasRef}
+        width={800}
+        height={600}
+        className="main-canvas"
+        onClick={(e) => handleCanvaClickAdd(e, canvasRef)}
+        onContextMenu={(e) => handleContextMenu(e)}
+        >
           Tu navegador no soporta el elemento Canvas.
         </canvas>
       </div>

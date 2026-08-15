@@ -150,4 +150,8 @@ export class Graph{
         this.nodes.clear();
         this.adjacencyList.clear();
     }
+
+    hasNode(nodeId) {
+        return this.nodes.has(nodeId);
+    }
 }

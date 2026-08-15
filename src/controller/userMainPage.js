@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSimulation } from "./useSimulation";
+import { useModalAddController } from "./useAddNode";
 
 import { Graph } from "../model/obj/Graph"
 
@@ -35,12 +36,12 @@ const CODES = {
 };
 
 const ALGORITHM_RUNNERS = {
-  'BFS': (g) => runBFS(g, 'A'),
-  'DFS': (g) => runDFS(g, 'A'),
-  'Dijkstra': (g) => runDijkstra(g, 'A'),
-  'Bellman-Ford': (g) => runBellmanFord(g, 'A'),
-  'Prim': (g) => runPrim(g, 'A'),
-  'Kruskal': (g) => runKruskal(g),
+  'BFS': (g, startN) => runBFS(g, startN),
+  'DFS': (g, startN) => runDFS(g, startN),
+  'Dijkstra': (g, startN) => runDijkstra(g, startN),
+  'Bellman-Ford': (g, startN) => runBellmanFord(g, startN),
+  'Prim': (g, startN) => runPrim(g, startN),
+  'Kruskal': (g, startN) => runKruskal(g, startN),
 };
 
 
@@ -60,6 +61,15 @@ export function useMainPageController(graph) {
 
     const { currentFrame, isPlaying, pause, play, resume, reset } = useSimulation(simulationSteps, velocity);
 
+    const [startNode, setStarNode] = useState("A");
+    const [needStarNode, setNeedStarNode] = useState(false);
+
+    useEffect(() => {
+        const requiresStartNode = selectedAlgo !== 'Kruskal';
+        setNeedStarNode(requiresStartNode);
+    }, [selectedAlgo]);
+    
+
     const showError = (title, message) => {
         setErrorState({ isOpen: true, title, message });
     };
@@ -71,9 +81,8 @@ export function useMainPageController(graph) {
     const handleEjecutarAlgoritmo = () => {
         const runner = ALGORITHM_RUNNERS[selectedAlgo];
         if (!runner) return;
-
         reset();
-        setSimulationSteps(runner(graph));
+        setSimulationSteps(runner(graph, startNode));
         play();
     };
 
@@ -175,6 +184,37 @@ export function useMainPageController(graph) {
         }
     };
 
+    const handleSetStartNode = (e) => {
+        e.preventDefault();
+        
+        const formData = new FormData(e.target);
+        const nodeValue = formData.get("initialNode")?.trim();
+      
+        
+        if(!nodeValue){
+            showError(
+                "Nodo inicial inválido", 
+                "No se coloco un nodo inicial. Se usará el nodo 'A' por defecto."
+            );
+            return;
+        }
+
+        if(!graph.hasNode(nodeValue)) {
+            showError(
+                "Nodo inicial inválido", 
+                `El nodo inicial "${nodeValue}" no existe en el grafo.`
+            );
+        }
+
+        setStarNode(nodeValue ? nodeValue : "A");
+    }
+
+    const addNodeProps = useModalAddController({
+        graph,
+        onClose: () => setIsAddOpen(false),
+        onGraphChange: refreshGraph
+    });
+
   return {
     // Estado
     activeCategory,
@@ -193,6 +233,10 @@ export function useMainPageController(graph) {
     velocity,
     isSpeedOpen,
     showSubtitles,
+    startNode,
+    needStarNode,
+
+    addNodeProps,
 
     // Acciones/Manejadores
     setSelectedAlgo,
@@ -210,5 +254,6 @@ export function useMainPageController(graph) {
     setIsSpeedOpen,
     toggleSubtitles,
     handleDeleteGraph,
+    handleSetStartNode,
   };
 }

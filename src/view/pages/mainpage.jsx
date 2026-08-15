@@ -11,6 +11,7 @@ import ModalGraphView from "../components/ModalGraphView";
 import ModalError from "../components/utils/ModalError";
 import ModalAdd from "../components/ModalAdd";
 import ModalSpeed from "../components/ModalSpeed";
+import SideNode from "../components/SideNode";
 
 import "../styles/MainPage.css";
 
@@ -37,6 +38,10 @@ function MainPage({ graph }) {
     velocity,
     isSpeedOpen,
     showSubtitles,
+    startNode,
+    needStarNode,
+
+    addNodeProps,
 
     setSelectedAlgo,
     setIsGraphViewOpen,
@@ -53,6 +58,7 @@ function MainPage({ graph }) {
     setIsSpeedOpen,
     toggleSubtitles,
     handleDeleteGraph,
+    handleSetStartNode,
   } = useMainPageController(graph);
 
 
@@ -94,8 +100,10 @@ function MainPage({ graph }) {
         <section className="center-panel">
           <div className="canvas-wrapper">
             <GraphCanvas
-             currentState={currentFrame} graph={graph} 
+             currentState={currentFrame}
+             graph={graph} 
              showDescription={showSubtitles}
+             addNodeProps={addNodeProps}
              />
           </div>
 
@@ -121,6 +129,7 @@ function MainPage({ graph }) {
             auxiliaryStructure={currentFrame?.queueState || currentFrame?.stackState || []} 
             auxLabel={auxLabel} 
           />
+          {needStarNode ? <SideNode onSetStartNode = {handleSetStartNode  } /> : null}
         </aside>
 
       </main>
@@ -134,6 +143,7 @@ function MainPage({ graph }) {
       <ModalAdd 
         graph={graph}
         isOpen={isAddOpen}
+        addNodeProps={addNodeProps}
         onClose={() => setIsAddOpen(false)}
       />
 
