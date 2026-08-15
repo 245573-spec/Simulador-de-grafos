@@ -33,6 +33,7 @@ canvas {
   --text: #94a3b8;
   --text-h: #f8fafc;
   --text-b: #111827;
+  --text-d: rgb(214, 100, 87);
 
   /* Bordes y Sombras */
   --border: #1e293b;

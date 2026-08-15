@@ -1,15 +1,53 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/graph.png" />
-    <meta name="google-site-verification" content="1HHVp0TbrxGYEHGsShPQrHYqUucyXOlE58EGxT3vf6M" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Graphormática</title>
-    <meta name="description" content="Graphormática, simulador de grafos y algoritmos de recorridos, mts y caminos minimos.">
-    <meta name="keywords" content="simulador de grafos, algoritmo de grafos, Graphormática, nodos y aristas, grafos interactivos">
-    <meta name="robots" content="index, follow">
-    <meta name="author" content="Tilines insanos de lord Carrasco">
+    
+    <!-- Configuración Básica y SEO -->
+    <title>Graphormática - Simulador de Grafos</title>
+    <meta name="description" content="Graphormática, simulador de grafos interactivo para algoritmos de recorridos, MST y caminos mínimos." />
+    <meta name="keywords" content="simulador de grafos, algoritmo de grafos, Graphormática, nodos y aristas, grafos interactivos" />
+    <meta name="author" content="Tilines insanos de lord Carrasco" />
+    <meta name="robots" content="index, follow" />
+    
+
+    <link rel="canonical" href="https://245573-spec.github.io/Simulador-de-grafos/" />
+
+    <!-- Verificación de Google -->
+    <meta name="google-site-verification" content="1HHVp0TbrxGYEHGsShPQrHYqUucyXOlE58EGxT3vf6M" />
+
+    <!-- Favicons (Rutas ajustadas para build de Vite) -->
+    <link rel="icon" type="image/x-icon" href="./favicon/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="./favicon/site.webmanifest" />
+
+    <!-- Open Graph / Facebook / WhatsApp / LinkedIn -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://245573-spec.github.io/Simulador-de-grafos/" />
+    <meta property="og:title" content="Graphormática - Simulador de Grafos" />
+    <meta property="og:description" content="Simulador interactivo de grafos, algoritmos de recorridos, MST y caminos mínimos." />
+    <meta property="og:image" content="https://245573-spec.github.io/Simulador-de-grafos/favicon/android-chrome-512x512.png" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Graphormática - Simulador de Grafos" />
+    <meta name="twitter:description" content="Simulador interactivo de grafos, algoritmos de recorridos, MST y caminos mínimos." />
+    <meta name="twitter:image" content="https://245573-spec.github.io/Simulador-de-grafos/favicon/android-chrome-512x512.png" />
+    <script type="text/javascript">
+    (function(l) {
+      if (l.search[1] === '/' ) {
+        var decoded = l.search.slice(1).split('&').map(function(s) { 
+          return s.replace(/~and~/g, '&')
+        }).join('?');
+        window.history.replaceState(null, null,
+            l.pathname.slice(0, -1) + decoded + l.hash
+        );
+      }
+    }(window.location))
+  </script>
   </head>
   <body>
     <div id="root"></div>

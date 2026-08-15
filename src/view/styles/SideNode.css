@@ -34,7 +34,7 @@
     width: 60%;
     height: 26px;
     background-color: var(--card-inner-bg);
-    border: 1px solid var(--border);
+    border: 1.8px solid var(--border);
     padding: 10px;
     border-radius: 6px;
     color: var(--text-h);
